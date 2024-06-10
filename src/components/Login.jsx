@@ -37,6 +37,7 @@ const Login = () => {
         window.localStorage.setItem(
         'loggedUser', JSON.stringify(user)
         )
+        
         setToken(user.token)
         setUser(user)
         setUsername('')
@@ -139,7 +140,7 @@ const Login = () => {
     )
     }
 
-    if (user) {
+   if (user) {
     return (
         <div>
         moi {user.name}
@@ -156,7 +157,7 @@ const Login = () => {
         {signupForm()}
         </div>
     )
-    }
+    
 }
-
+}
 export default Login
