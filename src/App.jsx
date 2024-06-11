@@ -7,8 +7,6 @@ import { Predictions } from "./pages/Predictions";
 import { Users } from "./pages/Users";
 import Navbar from "./components/Navbar";
 import Login from './components/Login';
-import { login } from './services/userManagement';
-import Notification from './components/Notification';
 
 function App() {
   
