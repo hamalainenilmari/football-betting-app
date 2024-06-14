@@ -127,6 +127,15 @@ const Match = ({ match, makePrediction, user }) => {
         return daysDiff >= 1.5;
       };
 
+      const isMatchInHistory = () => {
+        const today = new Date();
+        const matchDate = new Date(match.date);
+        const timeDiff = matchDate.getTime() - today.getTime();
+        const daysDiff = timeDiff / (1000 * 3600 * 24);
+        console.log("days dif " + daysDiff)
+        return daysDiff < 0;
+      };
+
       const buttonStyle = {
         padding: '4px 4px',
         background: '#007bff',
@@ -137,15 +146,21 @@ const Match = ({ match, makePrediction, user }) => {
         transition: 'background-color 0.3s ease',
         fontSize: '12px',
       };
+
+      const matchContainerStyle = {
+        flexDirection: 'column', // Display matches vertically on small screens
+        marginBottom: '20px',
+      };
     
       // If match is two or more days later than today, don't render
-      if (isMatchInFuture()) {
+
+      if (isMatchInFuture() || isMatchInHistory()) {
         return null;
       }
       
 
   return (
-    <div>
+    <div style={matchContainerStyle}>
         <span style={timeStyle}>{matchTime}</span>
     <div className='match' style={matchStyle} display={'flex'}>
       <div style={teamStyle}>
