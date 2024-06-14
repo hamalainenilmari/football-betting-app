@@ -41,9 +41,7 @@ const Match = ({ match, makePrediction, user }) => {
     alignItems: 'center',
   };
 
-  const goalsInputStyle = {
-    marginLeft: 10,
-  };
+
 
   const handleHomeGoalsPrediction = (event) => {
     setHomeGoalsPrediction(Number(event.target.value));
@@ -55,6 +53,14 @@ const Match = ({ match, makePrediction, user }) => {
 
   const handleMakePrediction = () => {
     makePrediction(match, homeGoalsPrediction, awayGoalsPrediction);
+  };
+
+  const goalsInputStyle = {
+    marginLeft: 10,
+    width: '40px', // Make the input field narrower
+    padding: '4px', // Reduce padding for a smaller look
+    fontSize: '14px', // Adjust font size if needed
+    textAlign: 'center' // Center the text for better readability
   };
 
 
@@ -116,6 +122,17 @@ const Match = ({ match, makePrediction, user }) => {
         const daysDiff = timeDiff / (1000 * 3600 * 24);
         return daysDiff >= 1.5;
       };
+
+      const buttonStyle = {
+        padding: '4px 8px',
+        background: '#007bff',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        transition: 'background-color 0.3s ease',
+        fontSize: '12px',
+      };
     
       // If match is two or more days later than today, don't render
       if (isMatchInFuture()) {
@@ -151,7 +168,7 @@ const Match = ({ match, makePrediction, user }) => {
           /> ) : ( <span>{awayGoalsPredictionToShow}</span>) }
           <img src={match.awayLogo} style={{ width: '30px', height: '30px' }} />
           <span>{match.away}</span>
-          {(!predictionExists && !matchStarted) && (<button onClick={handleMakePrediction}>Make Prediction</button>)}
+          {(!predictionExists && !matchStarted) && (<button style={buttonStyle} onClick={handleMakePrediction}>Make Prediction</button>)}
       </div>
     </div>
     </div>
