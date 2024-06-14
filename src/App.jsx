@@ -211,7 +211,7 @@ const signupForm = () => {
         awayGoals: awayGoalsPrediction,
         winner: homeGoalsPrediction > awayGoalsPrediction ? match.home : awayGoalsPrediction > homeGoalsPrediction ? match.away : 'draw',
       }
-      const response = await axios.post('https://footballpredictapp-backend.onrender.com//api/predictions', prediction);
+      const response = await axios.post('https://footballpredictapp-backend.onrender.com/api/predictions', prediction);
       console.log(response)
       if (response.status === 201) {
         console.log("insertion succesful");

@@ -12,7 +12,7 @@ export function Predictions() {
 
   useEffect(() => async () => {
     const matches = await axios.post(
-    "https://footballpredictapp-backend.onrender.com//api/matches/",{date:"2024-06-14"})
+    "https://footballpredictapp-backend.onrender.com/api/matches/",{date:"2024-06-14"})
   
     /*const fetchMatches = async () => {
       const fetchedMatches = [

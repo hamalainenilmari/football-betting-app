@@ -60,7 +60,7 @@ const Match = ({ match, makePrediction, user }) => {
 
   const userHasAlreadyMadePredicion = async () => {
     try {
-        const response = await axios.get(`https://footballpredictapp-backend.onrender.com//api/predictions/username/${user.username}`);
+        const response = await axios.get(`https://footballpredictapp-backend.onrender.com/api/predictions/username/${user.username}`);
         if (response.data) {
             for (const matchToSearch of response.data) {
             if (matchToSearch.matchId === match.id) {
