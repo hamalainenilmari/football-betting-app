@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3000/api/matches'
+const baseUrl = 'https://footballpredictapp-backend.onrender.com//api/matches'
 
 const getAll = async () => {
     const response = await axios.get(baseUrl)

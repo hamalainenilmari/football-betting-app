@@ -6,7 +6,7 @@ export function Home() {
   const fetchMatches = async () => {
     try {
       const date = new Date().toISOString();
-      const response = await axios.get(`https://localhost:3000/api/matches?date=${date}`);
+      const response = await axios.get(`https://footballpredictapp-backend.onrender.com//api/matches?date=${date}`);
       setMatches(response.data);
     } catch (error) {
       console.error('Error fetching matches:', error);
