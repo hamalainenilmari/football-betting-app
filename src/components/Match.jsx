@@ -30,15 +30,20 @@ const Match = ({ match, makePrediction, user }) => {
     border: 'solid',
     borderWidth: 1,
     marginBottom: 5,
+    backgroundImage: `url("../styles/lukaspgeh.jpeg")`, // Set the background image
+    backgroundSize: 'cover', // Adjust background size as needed
+    backgroundPosition: 'center',
     display: 'flex',
+    justifyContent: 'space-between', // Remove this line
     alignItems: 'center',
-    justifyContent: 'space-between',
     flexWrap: 'wrap',
   };
 
   const teamStyle = {
     display: 'flex',
     alignItems: 'center',
+    marginLeft: '10px',
+    marginRight: '10px', // Add margin to create space between teams
   };
 
 
@@ -127,7 +132,7 @@ const Match = ({ match, makePrediction, user }) => {
       };
 
       const buttonStyle = {
-        padding: '4px 8px',
+        padding: '4px 4px',
         background: '#007bff',
         color: '#fff',
         border: 'none',
@@ -141,13 +146,14 @@ const Match = ({ match, makePrediction, user }) => {
       if (isMatchInFuture()) {
         return null;
       }
+      
 
   return (
     <div>
         <span style={timeStyle}> {matchTime} </span>
     <div className='match' style={matchStyle} display={'flex'}>
       <div style={teamStyle}>
-        <span>{match.home}</span>
+        <span>{match.home} </span>
         <img src={match.homeLogo} style={{ width: '30px', height: '30px' }} />
         {(!predictionExists && !matchStarted) ? (
           <input 
