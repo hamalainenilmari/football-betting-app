@@ -30,9 +30,6 @@ const Match = ({ match, makePrediction, user }) => {
     border: 'solid',
     borderWidth: 1,
     marginBottom: 5,
-    backgroundImage: `url("../styles/lukaspgeh.jpeg")`, // Set the background image
-    backgroundSize: 'cover', // Adjust background size as needed
-    backgroundPosition: 'center',
     display: 'flex',
     justifyContent: 'space-between', // Remove this line
     alignItems: 'center',
@@ -42,8 +39,7 @@ const Match = ({ match, makePrediction, user }) => {
   const teamStyle = {
     display: 'flex',
     alignItems: 'center',
-    marginLeft: '10px',
-    marginRight: '10px', // Add margin to create space between teams
+    marginRight: '5px', // Add margin to create space between teams
   };
 
 
@@ -64,7 +60,7 @@ const Match = ({ match, makePrediction, user }) => {
 
   const goalsInputStyle = {
     marginLeft: 10,
-    width: '40px', // Make the input field narrower
+    width: '30px', // Make the input field narrower
     padding: '4px', // Reduce padding for a smaller look
     fontSize: '14px', // Adjust font size if needed
     textAlign: 'center' // Center the text for better readability
@@ -136,7 +132,7 @@ const Match = ({ match, makePrediction, user }) => {
         background: '#007bff',
         color: '#fff',
         border: 'none',
-        borderRadius: '4px',
+        borderRadius: '6px',
         cursor: 'pointer',
         transition: 'background-color 0.3s ease',
         fontSize: '12px',
@@ -150,10 +146,10 @@ const Match = ({ match, makePrediction, user }) => {
 
   return (
     <div>
-        <span style={timeStyle}> {matchTime} </span>
+        <span style={timeStyle}>{matchTime}</span>
     <div className='match' style={matchStyle} display={'flex'}>
       <div style={teamStyle}>
-        <span>{match.home} </span>
+        <span>{match.home}</span>
         <img src={match.homeLogo} style={{ width: '30px', height: '30px' }} />
         {(!predictionExists && !matchStarted) ? (
           <input 
