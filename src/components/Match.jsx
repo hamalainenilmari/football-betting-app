@@ -4,10 +4,10 @@ import axios from 'axios';
 
 const Match = ({ match, makePrediction, user }) => {
 
-  const [homeGoalsPrediction, setHomeGoalsPrediction] = useState(0)
-  const [awayGoalsPrediction, setAwayGoalsPrediction] = useState(0)
-  const [homeGoalsPredictionToShow, setHomeGoalsPredictionToShow] = useState(0)
-  const [awayGoalsPredictionToShow, setAwayGoalsPredictionToShow] = useState(0)
+  const [homeGoalsPrediction, setHomeGoalsPrediction] = useState('')
+  const [awayGoalsPrediction, setAwayGoalsPrediction] = useState('')
+  const [homeGoalsPredictionToShow, setHomeGoalsPredictionToShow] = useState('')
+  const [awayGoalsPredictionToShow, setAwayGoalsPredictionToShow] = useState('')
   const [predictionExists, setPredictionExists] = useState(false)
   const [matchStarted, setMatchStarted] = useState(false)
   const [matchTime, setMatchTime] = useState('')
@@ -44,15 +44,17 @@ const Match = ({ match, makePrediction, user }) => {
 
 
   const handleHomeGoalsPrediction = (event) => {
-    setHomeGoalsPrediction(Number(event.target.value));
+    setHomeGoalsPrediction(event.target.value);
   };
 
   const handleAwayGoalsChange = (event) => {
-    setAwayGoalsPrediction(Number(event.target.value));
+    setAwayGoalsPrediction(event.target.value);
   };
 
   const handleMakePrediction = () => {
-    makePrediction(match, homeGoalsPrediction, awayGoalsPrediction);
+    const homeToSend = homeGoalsPrediction === '' ? 0 : Number(homeGoalsPrediction);
+    const awayToSend = awayGoalsPrediction === '' ? 0 : Number(awayGoalsPrediction);
+    makePrediction(match, homeToSend, awayToSend);
   };
 
   const goalsInputStyle = {
@@ -90,7 +92,7 @@ const Match = ({ match, makePrediction, user }) => {
         userHasAlreadyMadePredicion();
         setMatchTime(formatDate(match.date))
       }, []);
-
+      /*
       const dateStyle = {
         position: 'absolute', // Position the date absolutely within the parent container
         top: 0, // Position at the top
@@ -99,6 +101,7 @@ const Match = ({ match, makePrediction, user }) => {
         backgroundColor: 'rgba(255,255,255,0.8)', // Semi-transparent background
         padding: '5px', // Add padding for better readability
       };
+      */
  
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -151,7 +154,6 @@ const Match = ({ match, makePrediction, user }) => {
             type="number" 
             value={homeGoalsPrediction} 
             onChange={handleHomeGoalsPrediction} 
-            min="0"
             style={goalsInputStyle}
           />
         ) : ( <span>{homeGoalsPredictionToShow}</span>) }
@@ -163,7 +165,6 @@ const Match = ({ match, makePrediction, user }) => {
             type="number" 
             value={awayGoalsPrediction} 
             onChange={handleAwayGoalsChange} 
-            min="0"
             style={goalsInputStyle}
           /> ) : ( <span>{awayGoalsPredictionToShow}</span>) }
           <img src={match.awayLogo} style={{ width: '30px', height: '30px' }} />

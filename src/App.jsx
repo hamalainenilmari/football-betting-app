@@ -4,6 +4,7 @@ import {login, signup} from './services/userManagement'
 import Notification from './components/Notification'
 import Match from './components/Match'
 import axios from 'axios'
+import Table from './components/Table'
 
 
 const App = () => {
@@ -253,6 +254,7 @@ const signupForm = () => {
             user={user}
           />
         )}
+        <Table />
         <p>päivitä sivu kun oot veikannu nii ne paskat näkyy</p>
         <p>loput äpist tulee myöhemmi. jos joku leikkii ja ettii bugei (niit on) nii väärennän sun veikkaukset </p>
       </div>

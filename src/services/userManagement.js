@@ -17,4 +17,11 @@ const signup = async credentials => {
     return response.data
 }
 
-export { login, signup }
+const getAll = async () => {
+  const response = await axios.get('https://footballpredictapp-backend.onrender.com/api/users')
+  console.log(response.data)
+  return response.data
+}
+
+
+export { login, signup, getAll }
