@@ -17,6 +17,7 @@ const Match = ({ match, makePrediction, user }) => {
   const [predictionExists, setPredictionExists] = useState(false)
   const [matchStarted, setMatchStarted] = useState(false)
   const [matchTime, setMatchTime] = useState('')
+  const [predictionMade, setPredictionMade] = useState(false)
 
   const [hasEnded, setHasEnded] = useState(false)
   const [homeGoalsResult, setHomeGoalsResult] = useState('')
@@ -39,9 +40,9 @@ const Match = ({ match, makePrediction, user }) => {
     fetchInfo()
     
     predictionsService.getAllForTheMatch(match.id).then(preds =>
-        setOtherPredictions( preds )
+        setOtherPredictions( preds.filter(pred => pred.username !== user.username) )
     )
-  }, [predictionExists, hasEnded]);
+  }, [predictionExists, hasEnded, predictionMade]);
 
 
   const handleHomeGoalsPrediction = (event) => {
@@ -58,7 +59,12 @@ const Match = ({ match, makePrediction, user }) => {
   const handleMakePrediction = () => {
     const homeToSend = homeGoalsPrediction === '' ? 0 : Number(homeGoalsPrediction);
     const awayToSend = awayGoalsPrediction === '' ? 0 : Number(awayGoalsPrediction);
-    makePrediction(match, homeToSend, awayToSend);
+    const success = makePrediction(match, homeToSend, awayToSend);
+    if (success) {
+        setPredictionMade(true)
+        setHomeGoalsPredictionToShow(homeToSend);
+        setAwayGoalsPredictionToShow(awayToSend);
+    }
   };
 
 
@@ -251,7 +257,7 @@ const Match = ({ match, makePrediction, user }) => {
           <div>
 <div className='inputContainerStyle'>
 
-              {(!predictionExists && !matchStarted) ? (
+              {(!predictionExists && !matchStarted && !predictionMade) ? (
                 <input
                   className='goalsInputStyle'
                   type="number"
@@ -264,7 +270,7 @@ const Match = ({ match, makePrediction, user }) => {
             <span style={{ marginBottom: 15 }}> - </span>
             <div className='inputContainerStyle'>
 
-              {(!predictionExists && !matchStarted) ? (
+              {(!predictionExists && !matchStarted && !predictionMade) ? (
                 <input
                   className='goalsInputStyle'
                   type="number"
@@ -298,14 +304,14 @@ const Match = ({ match, makePrediction, user }) => {
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '10px' }}>
 
-          {(!predictionExists && !matchStarted) && (<button className='buttonStyle' onClick={handleMakePrediction}>Make Prediction</button>)}
+          {(!predictionExists && !matchStarted && !predictionMade) && (<button className='buttonStyle' onClick={handleMakePrediction}>Veikkaa</button>)}
         </div>
       </div>
       <div>
   {matchStarted && (
     <div style={{ fontSize: 'x-small' }}>
       {hasEnded && (
-      <p>lopputulos {homeGoalsResult} - {awayGoalsResult} pojoja saatu: {pointsGained} ({pointsExplanation})</p>
+      <p>lopputulos {homeGoalsResult}-{awayGoalsResult} pojoja saatu: {pointsGained} ({pointsExplanation})</p>
       )}
       <button onClick={() => setShowOthers(!showOthers)}>
         Näytä muiden vedot
@@ -313,7 +319,7 @@ const Match = ({ match, makePrediction, user }) => {
       <div>
       {showOthers && otherPredictions.map(prediction => (
         <span key={prediction.id}>
-          {prediction.username} {prediction.homeGoals} - {prediction.awayGoals}&nbsp;&nbsp;&nbsp;
+          {prediction.username} {prediction.homeGoals}-{prediction.awayGoals}&nbsp;&nbsp;&nbsp;
         </span>
       ))}
       </div>

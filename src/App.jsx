@@ -16,6 +16,8 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [notification, setNotification] = useState(null)
+  const [predictionMade, setPredictionMade] = useState(false)
+  const [showInfo, setShowInfo] = useState(false)
     
   let token = null
 
@@ -26,7 +28,7 @@ const App = () => {
     matchService.getAll().then(matches =>
       setMatches( matches.sort((a,b) => new Date(a.date).getTime() - new Date(b.date).getTime()))
     )
-  }, [])
+  }, [predictionMade])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -108,11 +110,31 @@ const App = () => {
     transition: 'background-color 0.3s ease',
     fontSize: '16px',
   };
+
+  const infoButtonStyle = {
+    padding: '4px 8px',
+    background: '#007bff',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '3px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+    fontSize: '14px',
+  };
   /*
   buttonStyle:hover = {
     background: '#0056b3',
   };
   */
+
+  const infoStyle = {
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    transition: 'opacity 0.5s ease-in-out',
+    opacity: showInfo ? 1 : 0,
+    maxHeight: showInfo ? '100px' : '0',
+    overflow: 'hidden',
+    fontSize: '12px'
+  };
 
   const loginForm = () => {
     return (
@@ -225,26 +247,28 @@ const signupForm = () => {
       const response = await axios.post('https://footballpredictapp-backend.onrender.com/api/predictions', prediction);
       console.log(response)
       if (response.status === 201) {
-        console.log("insertion succesful");
         setNotification(`Veikkaus ${match.home} ${homeGoalsPrediction} - ${awayGoalsPrediction} ${match.away} isketty sisään (kusee varmaan)`)
         setTimeout( () => {
           setNotification(null)
           matchService.getAll().then(matches =>
             setMatches(matches)
           );
+          setPredictionMade(true)
           }, 5000)
+          return true
       } else {
-          console.log("here")
           setNotification("Veikkauksen tallentaminen ei onnistunut. Johtuu varmaan lukaksesta :/(ile on hidas)")
           setTimeout( () => {
             setNotification(null)
             }, 5000)
+            return false
       }
     } catch (err) {
       setNotification("Veikkauksen tallentaminen ei onnistunut. Johtuu varmaan lukaksesta :/(ile on hidas)")
-          setTimeout( () => {
-            setNotification(null)
-            }, 5000)
+      setTimeout( () => {
+        setNotification(null)
+        }, 5000)
+      return false
     }
   }
   
@@ -255,6 +279,16 @@ const signupForm = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background:'', }}>
         <p>{user.username}</p>
         <p><button onClick={logout}>Kirjaudu ulos</button></p>
+      </div>
+      <p><button style={infoButtonStyle} onClick={() => setShowInfo(!showInfo)} >Näytä pisteiden jakautuminen</button></p>
+      <div style={infoStyle}>
+        {showInfo && (
+          <ul>
+            <li>oikea tulos: 10p</li>
+            <li>oikea voittaja & toisen joukkueen maalit oikein: 4p</li>
+            <li>oikea voittaja: 3p</li>
+          </ul>
+        )}
       </div>
         <Notification message={notification}/>
         <Notification message={errorMessage}/>
@@ -267,8 +301,6 @@ const signupForm = () => {
           />
         )}
         <Table />
-        <p>päivitä sivu kun oot veikannu nii ne paskat näkyy</p>
-        <p>loput äpist tulee myöhemmi. jos joku leikkii ja ettii bugei (niit on) nii väärennän sun veikkaukset </p>
       </div>
       </div>
     )
