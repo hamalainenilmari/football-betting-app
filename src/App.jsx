@@ -231,6 +231,7 @@ const signupForm = () => {
         </form>
     )
   }
+  
 
   const makePrediction = async ( match, homeGoalsPrediction, awayGoalsPrediction ) => {
     try {
@@ -287,6 +288,7 @@ const signupForm = () => {
             <li>oikea tulos: 10p</li>
             <li>oikea voittaja & toisen joukkueen maalit oikein: 4p</li>
             <li>oikea voittaja: 3p</li>
+            <li>toisen joukkueen maalit oikein: 1p</li>
           </ul>
         )}
       </div>

@@ -18,6 +18,7 @@ const Match = ({ match, makePrediction, user }) => {
   const [matchStarted, setMatchStarted] = useState(false)
   const [matchTime, setMatchTime] = useState('')
   const [predictionMade, setPredictionMade] = useState(false)
+  const [predictionPoints, setPredictionPoints] = useState(0)
 
   const [hasEnded, setHasEnded] = useState(false)
   const [homeGoalsResult, setHomeGoalsResult] = useState('')
@@ -89,6 +90,20 @@ const Match = ({ match, makePrediction, user }) => {
                     console.log("homeGoals pred: " + homeGoalsPredictionToShow)
                     console.log("winner pred " + winnerPrediction)
                     setPredictionExists(true);
+                    if (matchToSearch.points !== null) {
+                        setPredictionPoints(matchToSearch.points)
+                        if (matchToSearch.points === 10) {
+                            setPointsExplanation('oikea tulos')
+                        } else if (matchToSearch.points === 4) {
+                            setPointsExplanation('Voittaja ja toisen joukkueen maalit oikein')
+                        } else if (matchToSearch.points === 3) {
+                            setPointsExplanation('Voittaja oikein')
+                        } else if (matchToSearch.points === 1) {
+                            setPointsExplanation('Toisen joukkueen maalit oikein')
+                        } else if (matchToSearch.points === 0) {
+                            setPointsExplanation('Paska veikkaus')
+                        }
+                    }
                     return true; // Return true
                 }
             }
@@ -149,8 +164,7 @@ const Match = ({ match, makePrediction, user }) => {
             setHomeGoalsResult(match.homeGoals);
             setAwayGoalsResult(match.awayGoals);
             setHasEnded(true);
-            console.log("match: " + JSON.stringify(match))
-            console.log("winner prediction: " + winnerPrediction + " real: " + match.winner)
+            /*
             if ((Number(match.homeGoals) === Number(homeGoalsPredictionToShow)) && (Number(match.awayGoals) === Number(awayGoalsPredictionToShow))) {
                 setPointsGained(10)
                 setPointsExplanation('oikea tulos')
@@ -170,7 +184,7 @@ const Match = ({ match, makePrediction, user }) => {
             } else {
                 setPointsGained(0)
                 setPointsExplanation('Paska veikkaus')
-            }
+            }*/
         }
       };
 
@@ -311,7 +325,7 @@ const Match = ({ match, makePrediction, user }) => {
   {matchStarted && (
     <div style={{ fontSize: 'x-small' }}>
       {hasEnded && (
-      <p>lopputulos {homeGoalsResult}-{awayGoalsResult} pojoja saatu: {pointsGained} ({pointsExplanation})</p>
+      <p>lopputulos {homeGoalsResult}-{awayGoalsResult} pojoja saatu: {predictionPoints} ({pointsExplanation})</p>
       )}
       <button onClick={() => setShowOthers(!showOthers)}>
         Näytä muiden vedot
