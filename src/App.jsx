@@ -41,11 +41,13 @@ const App = () => {
   const inputContainerStyle = {
     display: 'flex',
     flexDirection: 'column',
+    background: ''
   };
   
   const labelStyle = {
     marginBottom: '5px',
     fontSize: '14px',
+    background: ''
   };
   
   const inputStyle = {
@@ -59,6 +61,15 @@ const App = () => {
   const notificationStyle = {
     transition: 'opacity 0.3s ease',
   };
+  const mtachStyle ={
+    
+    alignItems: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    background: 'green'
+
+  }
+   
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -225,13 +236,13 @@ const signupForm = () => {
           }, 5000)
       } else {
           console.log("here")
-          setNotification("Veikkauksen tallentaminen ei onnistunut. Johtuu varmaan lukaksesta :/")
+          setNotification("Veikkauksen tallentaminen ei onnistunut. Johtuu varmaan lukaksesta :/(ile on hidas)")
           setTimeout( () => {
             setNotification(null)
             }, 5000)
       }
     } catch (err) {
-      setNotification("Veikkauksen tallentaminen ei onnistunut. Johtuu varmaan lukaksesta :/")
+      setNotification("Veikkauksen tallentaminen ei onnistunut. Johtuu varmaan lukaksesta :/(ile on hidas)")
           setTimeout( () => {
             setNotification(null)
             }, 5000)
@@ -240,8 +251,8 @@ const signupForm = () => {
 
   if (user) {
     return(
-      <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={mtachStyle}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background:'', }}>
         <p>{user.username}</p>
         <p><button onClick={logout}>Kirjaudu ulos</button></p>
       </div>
@@ -252,6 +263,7 @@ const signupForm = () => {
             match={match}
             makePrediction={makePrediction}
             user={user}
+           
           />
         )}
         <Table />

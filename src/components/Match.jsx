@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import '../styles/matchstyle.css';
 
 const Match = ({ match, makePrediction, user }) => {
 
@@ -12,36 +13,7 @@ const Match = ({ match, makePrediction, user }) => {
   const [matchStarted, setMatchStarted] = useState(false)
   const [matchTime, setMatchTime] = useState('')
 
-  const timeStyle = {
-    fontSize: '14px',
-    color: '#333',
-    marginRight: '10px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%', // Make sure the time spans the entire width
-    marginBottom: '10px' // Add margin bottom for spacing
-  };
-
-
-  const matchStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5,
-    display: 'flex',
-    justifyContent: 'space-between', // Remove this line
-    alignItems: 'center',
-    flexWrap: 'wrap',
-  };
-
-  const teamStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    marginRight: '5px', // Add margin to create space between teams
-  };
-
+  
 
 
   const handleHomeGoalsPrediction = (event) => {
@@ -58,14 +30,7 @@ const Match = ({ match, makePrediction, user }) => {
     makePrediction(match, homeToSend, awayToSend);
   };
 
-  const goalsInputStyle = {
-    marginLeft: 10,
-    width: '30px', // Make the input field narrower
-    padding: '4px', // Reduce padding for a smaller look
-    fontSize: '14px', // Adjust font size if needed
-    textAlign: 'center' // Center the text for better readability
-  };
-
+ 
 
   const userHasAlreadyMadePredicion = async () => {
     try {
@@ -136,6 +101,11 @@ const Match = ({ match, makePrediction, user }) => {
         return daysDiff < 0;
       };
 
+
+
+
+
+
       const buttonStyle = {
         padding: '4px 4px',
         background: '#007bff',
@@ -145,12 +115,82 @@ const Match = ({ match, makePrediction, user }) => {
         cursor: 'pointer',
         transition: 'background-color 0.3s ease',
         fontSize: '12px',
+       // marginTop:'10px',
+        fontFamily: 'Tahoma, Verdana, sans-serif',
+        marginBottom:'5px'
       };
 
-      const matchContainerStyle = {
-        flexDirection: 'column', // Display matches vertically on small screens
-        marginBottom: '20px',
+      
+      const predictionContainerStyle = {
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '100%',
+        alignItems: 'center',
       };
+      const inputContainerStyle = {
+        display: 'inline-block',
+        margin: '5px',
+        justifyContent: 'center',
+        margin: '10px 0',
+        
+        //alignItems: 'center',
+       
+       
+      };
+      const timeStyle = {
+        fontSize: '14px',
+        color: '#333',
+        marginRight: '10px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%', // Make sure the time spans the entire width
+        marginBottom: '5px', // Add margin bottom for spacing
+        fontFamily: 'Tahoma, Verdana, sans-serif',
+      };
+    
+    
+      const matchStyle = {
+        paddingTop: 1,
+        paddingLeft: 2,
+        paddingRight: 2,
+        border: 'solid',
+        borderWidth: 1,
+        marginBottom: 5,
+        display: 'flex',
+        justifyContent: 'space-between', // Remove this line
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        background: '#a1dda0'
+        
+      };
+    
+      const teamStyle = {
+        display: 'flex',
+        alignItems: 'center',
+        //marginRight: '3px', // Add margin to create space between teams
+        justifyContent: 'center',
+        background: '',
+        flexDirection: 'column',
+        //marginTop: '10px'
+        fontFamily: 'Tahoma, Verdana, sans-serif',
+        fontWeight: 'bold'
+      };
+      const goalsInputStyle = {
+        marginBottom: 15,
+        
+        width: '30px', // Make the input field narrower
+        padding: '4px', // Reduce padding for a smaller look
+        fontSize: '14px', // Adjust font size if needed
+        textAlign: 'center', // Center the text for better readability
+        
+      };
+
+      
+
+
+
+    
     
       // If match is two or more days later than today, don't render
 
@@ -160,34 +200,81 @@ const Match = ({ match, makePrediction, user }) => {
       
 
   return (
-    <div style={matchContainerStyle}>
-        <span style={timeStyle}>{matchTime}</span>
-    <div className='match' style={matchStyle} display={'flex'}>
-      <div style={teamStyle}>
+    <div className='matchContainerStyle'>
+    <div className='matchStyle' display={'flex'}>
+        <span className='timesStyle'>{matchTime}</span>
+        <div className='predictionContainerStyle'>
+        <div>
+
+</div>
+<div className='teamStyle'>
+
+     <div style={{ width: '50px', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '50%', overflow: 'hidden' }}>
+          <img
+       src={match.homeLogo}
+       style={{
+         maxWidth: '100%',
+         maxHeight: '100%',
+        objectFit: 'contain',
+      //borderRadius: '50%',
+    }}
+  />
+      </div>
         <span>{match.home}</span>
-        <img src={match.homeLogo} style={{ width: '30px', height: '30px' }} />
+        </div>
+        <div>
+
+        <div className='inputContainerStyle'>
+
         {(!predictionExists && !matchStarted) ? (
           <input 
-            type="number" 
-            value={homeGoalsPrediction} 
-            onChange={handleHomeGoalsPrediction} 
-            style={goalsInputStyle}
+          className='goalsInputStyle'
+          type="number" 
+          value={homeGoalsPrediction} 
+          onChange={handleHomeGoalsPrediction} 
+          
           />
         ) : ( <span>{homeGoalsPredictionToShow}</span>) }
         </div>
-        <span> - </span>
-        <div style={teamStyle}>
+        <span style={{marginBottom: 15}}> - </span>
+        <div className='inputContainerStyle'>
+         
         {(!predictionExists && !matchStarted) ? (
           <input 
-            type="number" 
-            value={awayGoalsPrediction} 
-            onChange={handleAwayGoalsChange} 
-            style={goalsInputStyle}
+          className='goalsInputStyle'
+          type="number" 
+          value={awayGoalsPrediction} 
+          onChange={handleAwayGoalsChange} 
+          
           /> ) : ( <span>{awayGoalsPredictionToShow}</span>) }
-          <img src={match.awayLogo} style={{ width: '30px', height: '30px' }} />
+          </div>
+           
+          </div>
+          
+          <div className='teamStyle'>
+
+          <div style={{ width: '50px', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '50%', overflow: 'hidden' }}>
+  <img
+    src={match.awayLogo}
+    style={{
+      maxWidth: '100%',
+      maxHeight: '100%',
+      objectFit: 'contain',
+      //borderRadius: '50%',
+    }}
+  />
+</div>
           <span>{match.away}</span>
-          {(!predictionExists && !matchStarted) && (<button style={buttonStyle} onClick={handleMakePrediction}>Make Prediction</button>)}
+          </div>
+          <div>
+
+</div>
+          
       </div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '10px' }}>
+
+          {(!predictionExists && !matchStarted) && (<button className='buttonStyle' onClick={handleMakePrediction}>Make Prediction</button>)}
+          </div>
     </div>
     </div>
   )

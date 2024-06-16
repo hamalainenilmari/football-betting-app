@@ -1,0 +1,79 @@
+.buttonStyle {
+    padding: 4px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 12px;
+    font-family: Tahoma, Verdana, sans-serif;
+    margin-bottom: 5px;
+  }
+  
+  .matchContainerStyle {
+    flex-direction: column;
+    margin: 0;
+    background: #45bf55;
+    align-items: center;
+    padding: 5px;
+  }
+  
+  .predictionContainerStyle {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
+  
+  .inputContainerStyle {
+    display: inline-block;
+    margin: 5px;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  
+  .timeStyle {
+    font-size: 14px;
+    color: #333;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 5px;
+    font-family: Tahoma, Verdana, sans-serif;
+  }
+  
+  .matchStyle {
+    padding-top: 1px;
+    padding-left: 2px;
+    padding-right: 2px;
+    border: solid;
+    border-width: 1px;
+    margin-bottom: 5px;
+    display: flex;
+    /* justify-content: space-between; */ /* Removed */
+    align-items: center;
+    flex-wrap: wrap;
+    background: #a1dda0;
+  }
+  
+  .teamStyle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: '';
+    flex-direction: column;
+    font-family: Tahoma, Verdana, sans-serif;
+    font-weight: bold;
+  }
+  
+  .goalsInputStyle {
+    margin-bottom: 15px;
+    width: 30px;
+    padding: 4px;
+    font-size: 14px;
+    text-align: center;
+  }
+  
