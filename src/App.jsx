@@ -22,10 +22,9 @@ const App = () => {
   const setToken = newToken => {
     token = `Bearer ${newToken}`
   }
-
   useEffect(() => {
     matchService.getAll().then(matches =>
-      setMatches( matches )
+      setMatches( matches.sort((a,b) => new Date(a.date).getTime() - new Date(b.date).getTime()))
     )
   }, [])
 
