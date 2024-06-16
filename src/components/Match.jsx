@@ -127,13 +127,15 @@ const Match = ({ match, makePrediction, user }) => {
         console.log("days dif " + daysDiff)
         setHomeGoalsResult(match.homeGoals)
         setAwayGoalsResult(match.awayGoals)
-        if (daysDiff < -0.3) {setHasEnded(true)}*/
+        if (daysDiff < -0.3) {setHasEnded(true)}
         const today = new Date();
         const matchDate = new Date(match.date);
         const timeDiff = today.getTime() - matchDate.getTime();
+        */
 
         // Check if the match ended more than 3 hours ago
-        if (timeDiff > 3 * 60 * 60 * 1000) { // 3 hours in milliseconds
+        if (match.winner) { // 3 hours in milliseconds
+            setHasEnded(true)
 
             // TODO add draw points
 
@@ -300,9 +302,11 @@ const Match = ({ match, makePrediction, user }) => {
         </div>
       </div>
       <div>
-  {hasEnded && (
+  {matchStarted && (
     <div style={{ fontSize: 'x-small' }}>
+      {hasEnded && (
       <p>lopputulos {homeGoalsResult} - {awayGoalsResult} pojoja saatu: {pointsGained} ({pointsExplanation})</p>
+      )}
       <button onClick={() => setShowOthers(!showOthers)}>
         Näytä muiden vedot
       </button>

@@ -250,6 +250,7 @@ const signupForm = () => {
   
   if (user) {
     return(
+      <div>
       <div style={mtachStyle}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background:'', }}>
         <p>{user.username}</p>
@@ -268,6 +269,7 @@ const signupForm = () => {
         <Table />
         <p>päivitä sivu kun oot veikannu nii ne paskat näkyy</p>
         <p>loput äpist tulee myöhemmi. jos joku leikkii ja ettii bugei (niit on) nii väärennän sun veikkaukset </p>
+      </div>
       </div>
     )
   } else {
