@@ -1,47 +1,44 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { teamStyle, timeStyle, matchStyle, buttonStyle, matchContainerStyle, goalsInputStyle } from '../styles/matchStyle'
+import predictionsService from '../services/predictions'
 
 const Match = ({ match, makePrediction, user }) => {
+
+  // TODO add draw points
 
   const [homeGoalsPrediction, setHomeGoalsPrediction] = useState('')
   const [awayGoalsPrediction, setAwayGoalsPrediction] = useState('')
   const [homeGoalsPredictionToShow, setHomeGoalsPredictionToShow] = useState('')
   const [awayGoalsPredictionToShow, setAwayGoalsPredictionToShow] = useState('')
+  const [winnerPrediction, setWinnerPrediction] = useState('')
   const [predictionExists, setPredictionExists] = useState(false)
   const [matchStarted, setMatchStarted] = useState(false)
   const [matchTime, setMatchTime] = useState('')
 
-  const timeStyle = {
-    fontSize: '14px',
-    color: '#333',
-    marginRight: '10px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%', // Make sure the time spans the entire width
-    marginBottom: '10px' // Add margin bottom for spacing
-  };
+  const [hasEnded, setHasEnded] = useState(false)
+  const [homeGoalsResult, setHomeGoalsResult] = useState('')
+  const [awayGoalsResult, setAwayGoalsResult] = useState('')
+  const [pointsGained, setPointsGained] = useState(0)
+  const [pointsExplanation, setPointsExplanation] = useState('')
+  const [otherPredictions, setOtherPredictions] = useState([])
 
-
-  const matchStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5,
-    display: 'flex',
-    justifyContent: 'space-between', // Remove this line
-    alignItems: 'center',
-    flexWrap: 'wrap',
-  };
-
-  const teamStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    marginRight: '5px', // Add margin to create space between teams
-  };
-
+  useEffect(() => {
+    const fetchInfo = async () => {
+    const hasMatchStarted = new Date(match.date) <= new Date();
+    setMatchStarted(hasMatchStarted);
+    const predictionsExists = await userHasAlreadyMadePredicion()
+    setPredictionExists(predictionsExists)
+    setMatchTime(formatDate(match.date))
+    isMatchInHistory()
+    }
+    fetchInfo()
+    
+    predictionsService.getAllForTheMatch(match.id).then(preds =>
+        setOtherPredictions( preds )
+    )
+  }, [predictionExists, hasEnded]);
 
 
   const handleHomeGoalsPrediction = (event) => {
@@ -52,57 +49,48 @@ const Match = ({ match, makePrediction, user }) => {
     setAwayGoalsPrediction(event.target.value);
   };
 
+
+
+
   const handleMakePrediction = () => {
     const homeToSend = homeGoalsPrediction === '' ? 0 : Number(homeGoalsPrediction);
     const awayToSend = awayGoalsPrediction === '' ? 0 : Number(awayGoalsPrediction);
     makePrediction(match, homeToSend, awayToSend);
   };
 
-  const goalsInputStyle = {
-    marginLeft: 10,
-    width: '30px', // Make the input field narrower
-    padding: '4px', // Reduce padding for a smaller look
-    fontSize: '14px', // Adjust font size if needed
-    textAlign: 'center' // Center the text for better readability
-  };
 
-
+  // check if user has already made a prediction for the game
+  // if true, then his prediction is shown instead of goal input forms
   const userHasAlreadyMadePredicion = async () => {
     try {
+        // get all predictions by the user
         const response = await axios.get(`https://footballpredictapp-backend.onrender.com/api/predictions/username/${user.username}`);
         if (response.data) {
+            // loop through the predictions
             for (const matchToSearch of response.data) {
-            if (matchToSearch.matchId === match.id) {
-                console.log("here") 
-                setHomeGoalsPredictionToShow(matchToSearch.homeGoals);
-                setAwayGoalsPredictionToShow(matchToSearch.awayGoals);
-                setPredictionExists(true);
-                return true; // Return true if match is found
-            }
+                // if found a prediction for the same matchId as the match to show
+                if (matchToSearch.matchId === match.id) {
+                    console.log("user has made prediction for match: " + match.home + "-" + match.away) 
+                    console.log("pred:" + JSON.stringify(matchToSearch))
+                    // add goals to show for the match to be the users prediction
+                    setHomeGoalsPredictionToShow(matchToSearch.homeGoals);
+                    setAwayGoalsPredictionToShow(matchToSearch.awayGoals);
+                    setWinnerPrediction(matchToSearch.winner)
+                    console.log("homegoals pred from obj" + matchToSearch.homeGoals)
+                    console.log("homeGoals pred: " + homeGoalsPredictionToShow)
+                    console.log("winner pred " + winnerPrediction)
+                    setPredictionExists(true);
+                    return true; // Return true
+                }
             }
         }
+        
         return false; // Return false if match is not found in predictions
         } catch (err) {
         console.log("Error fetching predictions:", err);
         }
     }
 
-    useEffect(() => {
-        const hasMatchStarted = new Date(match.date) <= new Date();
-        setMatchStarted(hasMatchStarted);
-        userHasAlreadyMadePredicion();
-        setMatchTime(formatDate(match.date))
-      }, []);
-      /*
-      const dateStyle = {
-        position: 'absolute', // Position the date absolutely within the parent container
-        top: 0, // Position at the top
-        left: '50%', // Move to the middle horizontally
-        transform: 'translateX(-50%)', // Center horizontally
-        backgroundColor: 'rgba(255,255,255,0.8)', // Semi-transparent background
-        padding: '5px', // Add padding for better readability
-      };
-      */
  
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -127,39 +115,62 @@ const Match = ({ match, makePrediction, user }) => {
         return daysDiff >= 1.5;
       };
 
-      const isMatchInHistory = () => {
+      const isMatchInHistory = async () => {
+        /*
         const today = new Date();
         const matchDate = new Date(match.date);
         const timeDiff = matchDate.getTime() - today.getTime();
         const daysDiff = timeDiff / (1000 * 3600 * 24);
         console.log("days dif " + daysDiff)
-        return daysDiff < 0;
-      };
+        setHomeGoalsResult(match.homeGoals)
+        setAwayGoalsResult(match.awayGoals)
+        if (daysDiff < -0.3) {setHasEnded(true)}*/
+        const today = new Date();
+        const matchDate = new Date(match.date);
+        const timeDiff = today.getTime() - matchDate.getTime();
 
-      const buttonStyle = {
-        padding: '4px 4px',
-        background: '#007bff',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '6px',
-        cursor: 'pointer',
-        transition: 'background-color 0.3s ease',
-        fontSize: '12px',
-      };
+        // Check if the match ended more than 3 hours ago
+        if (timeDiff > 3 * 60 * 60 * 1000) { // 3 hours in milliseconds
 
-      const matchContainerStyle = {
-        flexDirection: 'column', // Display matches vertically on small screens
-        marginBottom: '20px',
+            // TODO add draw points
+
+            await userHasAlreadyMadePredicion()
+            setHomeGoalsResult(match.homeGoals);
+            setAwayGoalsResult(match.awayGoals);
+            setHasEnded(true);
+            console.log("match: " + JSON.stringify(match))
+            console.log("winner prediction: " + winnerPrediction + " real: " + match.winner)
+            if ((Number(match.homeGoals) === Number(homeGoalsPredictionToShow)) && (Number(match.awayGoals) === Number(awayGoalsPredictionToShow))) {
+                setPointsGained(10)
+                setPointsExplanation('oikea tulos')
+            } else if (match.winner === winnerPrediction){
+                console.log("goals predicted: " + (Number(match.homeGoals) + " " + Number(homeGoalsPredictionToShow)))
+                if ((Number(match.homeGoals) === Number(setHomeGoalsPredictionToShow)) || (Number(match.awayGoals) === Number(awayGoalsPredictionToShow))) {
+                    console.log("winner predicted and one teams goals predicted")
+                    setPointsGained(4)
+                    setPointsExplanation('Voittaja ja toisen joukkueen maalit oikein')
+                } else {
+                    console.log("winner predicted")
+                    setPointsGained(3)
+                    setPointsExplanation('Voittaja oikein')
+                }
+            } else if ((Number(match.homeGoals) === Number(homeGoalsPredictionToShow)) || (Number(match.awayGoals) === Number(awayGoalsPredictionToShow))) {
+                setPointsGained(1)
+            } else {
+                setPointsGained(0)
+                setPointsExplanation('Paska veikkaus')
+            }
+        }
       };
     
       // If match is two or more days later than today, don't render
-
-      if (isMatchInFuture() || isMatchInHistory()) {
+      if (isMatchInFuture()) {
         return null;
       }
       
 
   return (
+    <div>
     <div style={matchContainerStyle}>
         <span style={timeStyle}>{matchTime}</span>
     <div className='match' style={matchStyle} display={'flex'}>
@@ -173,7 +184,7 @@ const Match = ({ match, makePrediction, user }) => {
             onChange={handleHomeGoalsPrediction} 
             style={goalsInputStyle}
           />
-        ) : ( <span>{homeGoalsPredictionToShow}</span>) }
+        ) : ( <div><span>{homeGoalsPredictionToShow}</span></div>) }
         </div>
         <span> - </span>
         <div style={teamStyle}>
@@ -189,6 +200,17 @@ const Match = ({ match, makePrediction, user }) => {
           {(!predictionExists && !matchStarted) && (<button style={buttonStyle} onClick={handleMakePrediction}>Make Prediction</button>)}
       </div>
     </div>
+    </div>
+    {hasEnded && (
+        <div style={{ fontSize: 'small' }}>
+        <p>lopputulos {homeGoalsResult} - {awayGoalsResult} pojoja saatu: {pointsGained} ({pointsExplanation})</p>
+        {otherPredictions.map(prediction =>
+            <span key={prediction.id}>
+                {prediction.username} {prediction.homeGoals} - {prediction.awayGoals}&nbsp;&nbsp;&nbsp;
+                </span>
+          )}
+          </div>
+        )}
     </div>
   )
 }

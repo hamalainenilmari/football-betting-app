@@ -264,11 +264,12 @@ const signupForm = () => {
       <div>
         <h2>Bettiäppi</h2>
         {loginForm()}
-        <h2>Luo uusi käyttäjä</h2>
-        {signupForm()}
       </div>
     ) 
   }
 }
 
 export default App
+
+/*<h2>Luo uusi käyttäjä</h2>
+        {signupForm()}*/

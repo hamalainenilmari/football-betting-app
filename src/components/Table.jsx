@@ -8,6 +8,7 @@ const Table = () => {
         const fetchUsers = async () => {
             try {
                 const users = await getAll();
+                users.sort((a,b) => b.points - a.points)
                 setUsers(users);
                 console.log("users " + users);
             } catch (error) {
