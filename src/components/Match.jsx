@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { teamStyle, timeStyle, matchStyle, buttonStyle, matchContainerStyle, goalsInputStyle } from '../styles/matchStyle'
+import '../styles/matchstyle.css'
 import predictionsService from '../services/predictions'
 
 const Match = ({ match, makePrediction, user }) => {
@@ -23,6 +24,8 @@ const Match = ({ match, makePrediction, user }) => {
   const [pointsGained, setPointsGained] = useState(0)
   const [pointsExplanation, setPointsExplanation] = useState('')
   const [otherPredictions, setOtherPredictions] = useState([])
+
+  const [showOthers, setShowOthers] = useState(false)
 
   useEffect(() => {
     const fetchInfo = async () => {
@@ -162,13 +165,15 @@ const Match = ({ match, makePrediction, user }) => {
             }
         }
       };
+
+
     
       // If match is two or more days later than today, don't render
       if (isMatchInFuture()) {
         return null;
       }
       
-
+      /*
   return (
     <div>
     <div style={matchContainerStyle}>
@@ -211,6 +216,106 @@ const Match = ({ match, makePrediction, user }) => {
           )}
           </div>
         )}
+    </div>
+  )*/
+    
+  return (
+    <div className='matchContainerStyle'>
+
+      <div className='matchStyle' display={'flex'}>
+
+        <span className='timeStyle'>{matchTime}</span>
+
+        <div className='predictionContainerStyle'>
+
+          <div>
+
+          </div>
+          <div className='teamStyle'>
+
+            <div style={{ width: '50px', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '50%', overflow: 'hidden' }}>
+              <img
+                src={match.homeLogo}
+                style={{
+                  maxWidth: '100%',
+                  maxHeight: '100%',
+                  objectFit: 'contain',
+                  //borderRadius: '50%',
+                }}
+              />
+            </div>
+            <span>{match.home}</span>
+          </div>
+          <div>
+<div className='inputContainerStyle'>
+
+              {(!predictionExists && !matchStarted) ? (
+                <input
+                  className='goalsInputStyle'
+                  type="number"
+                  value={homeGoalsPrediction}
+                  onChange={handleHomeGoalsPrediction}
+
+                />
+              ) : (<span>{homeGoalsPredictionToShow}</span>)}
+            </div>
+            <span style={{ marginBottom: 15 }}> - </span>
+            <div className='inputContainerStyle'>
+
+              {(!predictionExists && !matchStarted) ? (
+                <input
+                  className='goalsInputStyle'
+                  type="number"
+                  value={awayGoalsPrediction}
+                  onChange={handleAwayGoalsChange}
+
+                />) : (<span>{awayGoalsPredictionToShow}</span>)}
+            </div>
+
+          </div>
+
+          <div className='teamStyle'>
+
+            <div style={{ width: '50px', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '50%', overflow: 'hidden' }}>
+              <img
+                src={match.awayLogo}
+                style={{
+                  maxWidth: '100%',
+                  maxHeight: '100%',
+                  objectFit: 'contain',
+                  //borderRadius: '50%',
+                }}
+              />
+            </div>
+            <span>{match.away}</span>
+          </div>
+          <div>
+
+          </div>
+
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '10px' }}>
+
+          {(!predictionExists && !matchStarted) && (<button className='buttonStyle' onClick={handleMakePrediction}>Make Prediction</button>)}
+        </div>
+      </div>
+      <div>
+  {hasEnded && (
+    <div style={{ fontSize: 'x-small' }}>
+      <p>lopputulos {homeGoalsResult} - {awayGoalsResult} pojoja saatu: {pointsGained} ({pointsExplanation})</p>
+      <button onClick={() => setShowOthers(!showOthers)}>
+        Näytä muiden vedot
+      </button>
+      <div>
+      {showOthers && otherPredictions.map(prediction => (
+        <span key={prediction.id}>
+          {prediction.username} {prediction.homeGoals} - {prediction.awayGoals}&nbsp;&nbsp;&nbsp;
+        </span>
+      ))}
+      </div>
+    </div>
+  )}
+</div>
     </div>
   )
 }
