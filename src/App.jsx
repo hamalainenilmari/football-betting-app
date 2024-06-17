@@ -231,6 +231,15 @@ const signupForm = () => {
         </form>
     )
   }
+
+  const appStyle = {
+    backgroundImage: `url(./styles/bg1.png)`,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    height: '100vh', // Adjust according to your needs
+    width: '100vw',  // Adjust according to your needs
+  };
   
 
   const makePrediction = async ( match, homeGoalsPrediction, awayGoalsPrediction ) => {

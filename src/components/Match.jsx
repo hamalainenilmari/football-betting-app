@@ -41,7 +41,7 @@ const Match = ({ match, makePrediction, user }) => {
     fetchInfo()
     
     predictionsService.getAllForTheMatch(match.id).then(preds =>
-        setOtherPredictions( preds.filter(pred => pred.username !== user.username) )
+        setOtherPredictions( preds.filter(pred => pred.username !== user.username).sort((a,b) => b.points - a.points) )
     )
   }, [predictionExists, hasEnded, predictionMade]);
 
@@ -333,7 +333,7 @@ const Match = ({ match, makePrediction, user }) => {
       <div>
       {showOthers && otherPredictions.map(prediction => (
         <span key={prediction.id}>
-          {prediction.username} {prediction.homeGoals}-{prediction.awayGoals}&nbsp;&nbsp;&nbsp;
+          {prediction.username} {prediction.homeGoals}-{prediction.awayGoals} ({prediction.points}p)&nbsp;&nbsp;&nbsp;
         </span>
       ))}
       </div>
