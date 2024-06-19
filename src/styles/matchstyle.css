@@ -1,13 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;700&display=swap');
 .buttonStyle {
     padding: 4px;
-    background: #007bff;
+    background: #298df7;
     color: #fff;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-size: 12px;
-    font-family: Tahoma, Verdana, sans-serif;
+    font-family: 'Anek Devanagari', sans-serif;
     margin-bottom: 5px;
   }
   
@@ -16,13 +17,11 @@
     margin: 0;
     background: white;
     align-items: center;
-    padding: 5px;
-  }
-  
+  }  
   .predictionContainerStyle {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 90%;
     align-items: center;
   }
   
@@ -35,21 +34,30 @@
   
   .timeStyle {
     font-size: 14px;
-    color: #333;
+    color: #030303;
     margin-right: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     margin-bottom: 5px;
-    font-family: Tahoma, Verdana, sans-serif;
+    font-family: 'Anek Devanagari', sans-serif;
+    background-color: #298df7;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding-top: 1px;
+    padding-left: 2px;
+    
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    
   }
   
   .matchStyle {
     padding-top: 1px;
     padding-left: 2px;
     padding-right: 2px;
-    border: solid;
+    /*border: 2px solid;*/
+    border-radius: 10px;
     border-width: 1px;
     margin-bottom: 5px;
     flex-direction: column;
@@ -57,7 +65,8 @@
     /* justify-content: space-between; */ /* Removed */
     align-items: center;
     flex-wrap: wrap;
-    background: #a1dda0;
+    background: #49cdf5;
+    font-family: 'Anek Devanagari', sans-serif;
   }
   
   .teamStyle {
@@ -66,8 +75,9 @@
     justify-content: center;
     background: '';
     flex-direction: column;
-    font-family: Tahoma, Verdana, sans-serif;
+    font-family: 'Anek Devanagari', sans-serif;
     font-weight: bold;
+    flex: 1 1 0;
   }
   
   .goalsInputStyle {
@@ -85,4 +95,18 @@
     font-weight: bold;
     margin-top: 5px;
     margin-bottom: 10px;
+  }
+  .scorePredictionStyle {
+    
+    align-items: center;
+    position: relative;
+    margin-bottom:20px;
+    /*background-color: aliceblue;*/
+    font-family: 'Anek Devanagari', sans-serif;
+
+  }
+  .endResultStyle{
+    font-size: 'smaller';
+    font-family: 'Anek Devanagari', sans-serif;
+    font-size: 12px;
   }

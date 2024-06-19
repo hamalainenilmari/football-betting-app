@@ -222,7 +222,7 @@ const Match = ({ match, makePrediction, user }) => {
             </div>
             <span>{match.home}</span>
           </div>
-          <div>
+          <div className="scorePredictionStyle">
             <div className='inputContainerStyle'>
               {(!predictionExists && !matchStarted && !predictionMade) && (
                 <input
@@ -267,7 +267,7 @@ const Match = ({ match, makePrediction, user }) => {
       </div>
       <div>
         {predictionExists && (
-          <div style={{ fontSize: 'x-small' }}>
+          <div className='endResultStyle'>
               {hasEnded ? <p>oma veikkaus {homeGoalsPredictionToShow}-{awayGoalsPredictionToShow} pojoja saatu: {predictionPoints} ({pointsExplanation})</p> : 
               <p>oma veikkaus {homeGoalsPredictionToShow}-{awayGoalsPredictionToShow}</p>}
             <button onClick={() => setShowOthers(!showOthers)}>

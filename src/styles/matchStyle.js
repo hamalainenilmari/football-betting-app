@@ -37,6 +37,7 @@ const timeStyle = {
     cursor: 'pointer',
     transition: 'background-color 0.3s ease',
     fontSize: '12px',
+    
   };
 
   const matchContainerStyle = {
