@@ -43,7 +43,7 @@ const Match = ({ match, makePrediction, user }) => {
     predictionsService.getAllForTheMatch(match.id).then(preds =>
       setOtherPredictions(preds.filter(pred => pred.username !== user.username).sort((a, b) => b.points - a.points))
     )
-  }, [predictionExists, hasEnded, predictionMade]);
+  }, [hasEnded, predictionMade]);
 
 
   const handleHomeGoalsPrediction = (event) => {
@@ -63,7 +63,7 @@ const Match = ({ match, makePrediction, user }) => {
     const success = makePrediction(match, homeToSend, awayToSend);
     if (success) {
       setPredictionMade(true)
-      setPredictionExists(true)
+      //setPredictionExists(true)
       setHomeGoalsPredictionToShow(homeToSend);
       setAwayGoalsPredictionToShow(awayToSend);
     }
@@ -87,9 +87,6 @@ const Match = ({ match, makePrediction, user }) => {
             setHomeGoalsPredictionToShow(matchToSearch.homeGoals);
             setAwayGoalsPredictionToShow(matchToSearch.awayGoals);
             setWinnerPrediction(matchToSearch.winner)
-            console.log("homegoals pred from obj" + matchToSearch.homeGoals)
-            console.log("homeGoals pred: " + homeGoalsPredictionToShow)
-            console.log("winner pred " + winnerPrediction)
             setPredictionExists(true);
             if (matchToSearch.points !== null) {
               setPredictionPoints(matchToSearch.points)
@@ -141,20 +138,6 @@ const Match = ({ match, makePrediction, user }) => {
   };
 
   const isMatchInHistory = async () => {
-    /*
-    const today = new Date();
-    const matchDate = new Date(match.date);
-    const timeDiff = matchDate.getTime() - today.getTime();
-    const daysDiff = timeDiff / (1000 * 3600 * 24);
-    console.log("days dif " + daysDiff)
-    setHomeGoalsResult(match.homeGoals)
-    setAwayGoalsResult(match.awayGoals)
-    if (daysDiff < -0.3) {setHasEnded(true)}
-    const today = new Date();
-    const matchDate = new Date(match.date);
-    const timeDiff = today.getTime() - matchDate.getTime();
-    */
-
     // Check if the match ended more than 3 hours ago
     if (match.winner) { // 3 hours in milliseconds
       setHasEnded(true)
@@ -165,38 +148,13 @@ const Match = ({ match, makePrediction, user }) => {
       setHomeGoalsResult(match.homeGoals);
       setAwayGoalsResult(match.awayGoals);
       setHasEnded(true);
-      /*
-      if ((Number(match.homeGoals) === Number(homeGoalsPredictionToShow)) && (Number(match.awayGoals) === Number(awayGoalsPredictionToShow))) {
-          setPointsGained(10)
-          setPointsExplanation('oikea tulos')
-      } else if (match.winner === winnerPrediction){
-          console.log("goals predicted: " + (Number(match.homeGoals) + " " + Number(homeGoalsPredictionToShow)))
-          if ((Number(match.homeGoals) === Number(setHomeGoalsPredictionToShow)) || (Number(match.awayGoals) === Number(awayGoalsPredictionToShow))) {
-              console.log("winner predicted and one teams goals predicted")
-              setPointsGained(4)
-              setPointsExplanation('Voittaja ja toisen joukkueen maalit oikein')
-          } else {
-              console.log("winner predicted")
-              setPointsGained(3)
-              setPointsExplanation('Voittaja oikein')
-          }
-      } else if ((Number(match.homeGoals) === Number(homeGoalsPredictionToShow)) || (Number(match.awayGoals) === Number(awayGoalsPredictionToShow))) {
-          setPointsGained(1)
-      } else {
-          setPointsGained(0)
-          setPointsExplanation('Paska veikkaus')
-      }*/
     }
   };
-
-
 
   // If match is two or more days later than today, don't render
   if (isMatchInFuture()) {
     return null;
   }
-
-
 
   return (
     <div className='matchContainerStyle'>
@@ -266,7 +224,7 @@ const Match = ({ match, makePrediction, user }) => {
         </div>
       </div>
       <div>
-        {predictionExists && (
+        {(predictionExists || predictionMade || matchStarted) && (
           <div style={{ fontSize: 'x-small' }}>
               {hasEnded ? <p>oma veikkaus {homeGoalsPredictionToShow}-{awayGoalsPredictionToShow} pojoja saatu: {predictionPoints} ({pointsExplanation})</p> : 
               <p>oma veikkaus {homeGoalsPredictionToShow}-{awayGoalsPredictionToShow}</p>}
