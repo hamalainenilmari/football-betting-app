@@ -201,9 +201,12 @@ const Match = ({ match, makePrediction, user }) => {
   return (
     <div className='matchContainerStyle'>
       <div className='matchStyle' display={'flex'}>
-        <span className='timeStyle'>{matchTime}</span>
+        <div className='timeStyle'>
+
+        <span >{matchTime}</span>
+        </div>
         <div style={{justifyContent: 'center', alignItems: 'center'}} className='resultStyle'>
-        {!predictionExists ? (<p></p>) : hasEnded ? <span>Lopputulos</span>: <span>Matsi ei alkanut/kesken</span>}
+        {!predictionExists ? (<p></p>) : hasEnded ? <span style={{color:"white"}}>Lopputulos</span>: <span>Matsi ei alkanut/kesken</span>}
         </div>
         <div className='predictionContainerStyle'>
           <div>
@@ -268,14 +271,14 @@ const Match = ({ match, makePrediction, user }) => {
       <div>
         {predictionExists && (
           <div className='endResultStyle'>
-              {hasEnded ? <p>oma veikkaus {homeGoalsPredictionToShow}-{awayGoalsPredictionToShow} pojoja saatu: {predictionPoints} ({pointsExplanation})</p> : 
+              {hasEnded ? <p style={{textAlign: 'center'}}>oma veikkaus {homeGoalsPredictionToShow}-{awayGoalsPredictionToShow} pojoja saatu: {predictionPoints} ({pointsExplanation})</p> : 
               <p>oma veikkaus {homeGoalsPredictionToShow}-{awayGoalsPredictionToShow}</p>}
             <button onClick={() => setShowOthers(!showOthers)}>
               Näytä muiden vedot
             </button>
-            <div>
+            <div >
               {showOthers && otherPredictions.map(prediction => (
-                <span key={prediction.id}>
+                <span key={prediction.id} style={{paddingLeft: '1px', paddingRight: '1px'}}>
                   {prediction.username} {prediction.homeGoals}-{prediction.awayGoals} ({prediction.points}p)&nbsp;&nbsp;&nbsp;
                 </span>
               ))}
