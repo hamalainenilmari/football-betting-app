@@ -1,28 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;700&display=swap');
 .buttonStyle {
     padding: 4px;
-    background: #007bff;
+    background: #298df7;
     color: #fff;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-size: 12px;
-    font-family: Tahoma, Verdana, sans-serif;
+    font-family: 'Anek Devanagari', sans-serif;
     margin-bottom: 5px;
   }
   
   .matchContainerStyle {
     flex-direction: column;
     margin: 0;
-    background: white;
+    background: rgb(241, 244, 255);
     align-items: center;
-    padding: 5px;
-  }
-  
+    border-radius: 10px;
+    
+  }  
   .predictionContainerStyle {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 90%;
     align-items: center;
   }
   
@@ -31,25 +32,42 @@
     margin: 5px;
     justify-content: center;
     margin: 10px 0;
+    
   }
   
   .timeStyle {
     font-size: 14px;
-    color: #333;
+    color: #030303;
     margin-right: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     margin-bottom: 5px;
-    font-family: Tahoma, Verdana, sans-serif;
+    font-family: 'Anek Devanagari', sans-serif;
+    background-color: #298df7;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    padding-top: 3px;
+    margin-top: -1px;
+   
+    padding-left: 1px;
+    padding-right: 1px;
+    
+    
+    
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    
   }
   
   .matchStyle {
-    padding-top: 1px;
-    padding-left: 2px;
-    padding-right: 2px;
-    border: solid;
+    padding-top: 2px;
+    padding-left: 1px;
+    padding-right: 1px;
+    /*border: 2px solid;*/
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     border-width: 1px;
     margin-bottom: 5px;
     flex-direction: column;
@@ -57,7 +75,14 @@
     /* justify-content: space-between; */ /* Removed */
     align-items: center;
     flex-wrap: wrap;
-    background: #a1dda0;
+    /*background: #49cdf5;*/
+    background: linear-gradient(135deg, rgb(135, 205, 243), rgb(95, 127, 187));
+
+    font-family: 'Anek Devanagari', sans-serif;
+    
+    
+    box-sizing: border-box;
+     
   }
   
   .teamStyle {
@@ -66,8 +91,10 @@
     justify-content: center;
     background: '';
     flex-direction: column;
-    font-family: Tahoma, Verdana, sans-serif;
+    font-family: 'Anek Devanagari', sans-serif;
     font-weight: bold;
+    flex: 1 1 0;
+    color: #fff;
   }
   
   .goalsInputStyle {
@@ -85,4 +112,21 @@
     font-weight: bold;
     margin-top: 5px;
     margin-bottom: 10px;
+  }
+  .scorePredictionStyle {
+    
+    align-items: center;
+    position: relative;
+    margin-bottom:20px;
+    /*background-color: aliceblue;*/
+    font-family: 'Anek Devanagari', sans-serif;
+    color: rgb(0, 0, 0);
+    /*-webkit-text-stroke-width: .1px;
+    -webkit-text-stroke-color: rgb(241, 241, 241);*/
+
+  }
+  .endResultStyle{
+    font-size: 'smaller';
+    font-family: 'Anek Devanagari', sans-serif;
+    font-size: 12px;
   }

@@ -285,6 +285,7 @@ const signupForm = () => {
   if (user) {
     return(
       <div>
+        <p>loput veikkauspisteet päivittyy huomenna </p>
       <div style={mtachStyle}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background:'', }}>
         <p>{user.username}</p>
