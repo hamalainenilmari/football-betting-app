@@ -257,7 +257,7 @@ const signupForm = () => {
       const response = await axios.post('https://footballpredictapp-backend.onrender.com/api/predictions', prediction);
       console.log(response)
       if (response.status === 201) {
-        setNotification(`Veikkaus ${match.home} ${homeGoalsPrediction} - ${awayGoalsPrediction} ${match.away} isketty sisään (kusee varmaan)`)
+        setNotification(`Veikkaus ${match.home} ${homeGoalsPrediction} - ${awayGoalsPrediction} ${match.away} isketty sisään`)
         setTimeout( () => {
           setNotification(null)
           matchService.getAll().then(matches =>
@@ -281,11 +281,19 @@ const signupForm = () => {
       return false
     }
   }
+
+  const handleTest = (input) => {
+    setNotification("testiiii")
+    setTimeout( () => {
+      setNotification(null)
+      }, 5000)
+    console.log("here")
+  }
   
   if (user) {
     return(
       <div>
-        <p>loput veikkauspisteet päivittyy huomenna </p>
+        <Notification message={notification}/>
       <div style={mtachStyle}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background:'', }}>
         <p>{user.username}</p>
