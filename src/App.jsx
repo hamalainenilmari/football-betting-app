@@ -88,7 +88,7 @@ const App = () => {
       setPassword('')
     } catch (exception) {
       setNotification('Incorrect username or password')
-      setNotificationType('warning')
+      setNotificationType('danger')
       setTimeout( () => {
         setNotification(null)
       }, 5000)
@@ -190,7 +190,7 @@ const App = () => {
         setNewUserUsername('')
     } catch (exception) {
         setNotification('Error signing up')
-        setNotificationType('warning')
+        setNotificationType('danger')
         setTimeout( () => {
         setNotification(null)
         }, 5000)
@@ -272,7 +272,7 @@ const signupForm = () => {
           return true
       } else {
           setNotification("Veikkauksen tallentaminen ei onnistunut")
-          setNotificationType('warning')
+          setNotificationType('danger')
           setTimeout( () => {
             setNotification(null)
             setNotificationType(null)
@@ -281,7 +281,7 @@ const signupForm = () => {
       }
     } catch (err) {
       setNotification("Veikkauksen tallentaminen ei onnistunut")
-      setNotificationType('warning')
+      setNotificationType('danger')
       setTimeout( () => {
         setNotification(null)
         setNotificationType(null)
@@ -294,7 +294,7 @@ const signupForm = () => {
   if (user) {
     return(
       <div>
-        <Notification message={notification} type={"success"} />
+        <Notification message={notification} type={notificationType} />
       <div style={mtachStyle}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background:'', }}>
         <p>{user.username}</p>
