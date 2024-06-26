@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;700&display=swap');
+.containerStyle {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    background-image: linear-gradient(to left bottom, #8989ff, #0068ff, #0090ff, #00aff8, #45c8e3);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Anek Devanagari', sans-serif;
+    margin-top: 30px;
+    color: white;
+    
+}
+
+.userStyle {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    
+}
+
+.headerStyle {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    padding: 10px;
+    border-bottom: 2px solid #ffffff;
+    font-size: 18px;
+    margin-left: -21px;
+    margin-right: -21px;
+}
+
+.titleStyle {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    background-image: linear-gradient(to right, #373af8, #7e73f7, #4f5af8, #778bee, #5235f7);
+    margin-left: -20.5px;
+    margin-right: -20px;
+    margin-top: -20px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    box-shadow: 0px 2px 4px rgba(115, 202, 236, 0.2);
+    font-weight: bold;
+    
+    
+    
+    
+}
+.nameStyle {
+    border: 10px bold black ;
+    
+}

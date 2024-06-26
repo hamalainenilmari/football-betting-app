@@ -264,15 +264,15 @@ const Match = ({ match, makePrediction, user }) => {
           <div>
           </div>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '10px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', }}>
           {(!predictionExists && !matchStarted && !predictionMade) && (<button className='buttonStyle' onClick={handleMakePrediction}>Veikkaa</button>)}
         </div>
       </div>
       <div>
         {predictionExists && (
           <div className='endResultStyle'>
-              {hasEnded ? <p style={{textAlign: 'center'}}>oma veikkaus {homeGoalsPredictionToShow}-{awayGoalsPredictionToShow} pojoja saatu: {predictionPoints} ({pointsExplanation})</p> : 
-              <p>oma veikkaus {homeGoalsPredictionToShow}-{awayGoalsPredictionToShow}</p>}
+              {hasEnded ? <div className="veikkausStyle"><p style={{textAlign: 'center'}}>oma veikkaus {homeGoalsPredictionToShow}-{awayGoalsPredictionToShow} pojoja saatu: {predictionPoints} ({pointsExplanation})</p></div> : 
+              <div className="veikkausStyle"><p style={{textAlign: 'center'}}>oma veikkaus {homeGoalsPredictionToShow}-{awayGoalsPredictionToShow}</p></div>}
             <button onClick={() => setShowOthers(!showOthers)}>
               Näytä muiden vedot
             </button>

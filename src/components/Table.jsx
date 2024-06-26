@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getAll } from '../services/userManagement';
-
+import '../styles/tableStyle.css'
 const Table = () => {
     const [users, setUsers] = useState([])
 
@@ -18,48 +18,20 @@ const Table = () => {
         fetchUsers()
       }, []);
 
-      const containerStyle = {
-        padding: '20px',
-        maxWidth: '600px',
-        margin: '0 auto',
-        backgroundColor: '#f4f4f4',
-        borderRadius: '8px',
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
-    };
-
-    const userStyle = {
-        display: 'flex',
-        justifyContent: 'space-between',
-        padding: '10px',
-        borderBottom: '1px solid #ddd'
-    };
-
-    const headerStyle = {
-        display: 'flex',
-        justifyContent: 'space-between',
-        fontWeight: 'bold',
-        padding: '10px',
-        borderBottom: '2px solid #000',
-        fontSize: '18px'
-    };
-
-    const titleStyle = {
-        textAlign: 'center',
-        fontSize: '24px',
-        marginBottom: '20px'
-    };
 
     return (
-        <div style={containerStyle}>
-            <div style={titleStyle}>Tilanne</div>
-            <div style={headerStyle}>
+        <div className="containerStyle">
+            <div className="titleStyle">Tilanne</div>
+            <div className="headerStyle">
+                
                 <span>Pelurit</span>
                 <span>Pojot</span>
             </div>
-            {users.map(user => (
-                <div key={user.id} style={userStyle}>
-                    <span>{user.username}</span>
-                    <span>{user.points}</span>
+            {users.map((user,index) => (
+                <div key={user.id} className="userStyle">
+                    <span className="nameStyle">{index + 1}.</span>
+                    <span className="nameStyle" style={{flex: "3", textalign: "left",paddingLeft:"5px"}}>{user.username}</span>
+                    <span className="nameStyle">{user.points}</span>
                 </div>
             ))}
         </div>
