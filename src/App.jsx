@@ -89,11 +89,12 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setNotification('Incorrect username or password')
+      setNotification('Väärä salasana tai tunnus')
       setNotificationType('danger')
       setTimeout( () => {
         setNotification(null)
-      }, 5000)
+        setNotificationType(null)
+      }, 10000)
     }
     console.log('logging in with', username, password)
   }
@@ -143,7 +144,7 @@ const App = () => {
   const loginForm = () => {
     return (
       <form onSubmit={handleLogin}>
-        <Notification message={notification} style={notificationStyle} />
+        <Notification message={notification} type={notificationType} />
         <div style={{ marginBottom: '10px' }}>
         <div style={inputContainerStyle}>
           <h2>Kirjaudu sisään</h2>
@@ -196,7 +197,7 @@ const App = () => {
         setNotificationType('danger')
         setTimeout( () => {
         setNotification(null)
-        }, 5000)
+        }, 10000)
     }
     console.log('logging in with', username, password)
 }
@@ -271,7 +272,7 @@ const signupForm = () => {
             setMatches(matches)
           );
           setPredictionMade(true)
-          }, 5000)
+          }, 10000)
           return true
       } else {
           setNotification("Veikkauksen tallentaminen ei onnistunut")
