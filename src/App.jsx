@@ -18,8 +18,8 @@ const App = () => {
   const [notificationType, setNotificationType] = useState(null)
   const [predictionMade, setPredictionMade] = useState(false)
   const [showInfo, setShowInfo] = useState(false)
-  const [hideOld, setHideOld] = useState(false)
-  const [hideOldInfoText, setHideOldInfoText] = useState("piilota vanhat pelit")
+  const [hideOld, setHideOld] = useState(true)
+  const [hideOldInfoText, setHideOldInfoText] = useState("näytä vanhat pelit")
     
   let token = null
 
@@ -297,7 +297,7 @@ const signupForm = () => {
   const handleHideOldGames = () => {
     if (hideOld) {
       setHideOld(!hideOld)
-      setHideOldInfoText("piilota vanhat pelit")
+      setHideOldInfoText("piiloita vanhat pelit")
     } else {
       setHideOld(!hideOld)
       setHideOldInfoText("näytä vanhat pelit")
