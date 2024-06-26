@@ -18,6 +18,8 @@ const App = () => {
   const [notificationType, setNotificationType] = useState(null)
   const [predictionMade, setPredictionMade] = useState(false)
   const [showInfo, setShowInfo] = useState(false)
+  const [hideOld, setHideOld] = useState(false)
+  const [hideOldInfoText, setHideOldInfoText] = useState("piilota vanhat pelit")
     
   let token = null
 
@@ -121,6 +123,7 @@ const App = () => {
     cursor: 'pointer',
     transition: 'background-color 0.3s ease',
     fontSize: '14px',
+    marginBottom: '5px'
   };
   /*
   buttonStyle:hover = {
@@ -290,6 +293,16 @@ const signupForm = () => {
     }
   }
 
+  const handleHideOldGames = () => {
+    if (hideOld) {
+      setHideOld(!hideOld)
+      setHideOldInfoText("piilota vanhat pelit")
+    } else {
+      setHideOld(!hideOld)
+      setHideOldInfoText("näytä vanhat pelit")
+    }
+  }
+  
   
   if (user) {
     return(
@@ -311,12 +324,13 @@ const signupForm = () => {
           </ul>
         )}
       </div>
+      <button onClick={() => handleHideOldGames()} style={infoButtonStyle}>{hideOldInfoText}</button>
         {matches.map(match =>
           <Match key={match.id}
             match={match}
             makePrediction={makePrediction}
             user={user}
-           
+            hideOld={hideOld}
           />
         )}
         <Table />

@@ -5,7 +5,7 @@ import { teamStyle, timeStyle, matchStyle, buttonStyle, matchContainerStyle, goa
 import '../styles/matchstyle.css'
 import predictionsService from '../services/predictions'
 
-const Match = ({ match, makePrediction, user }) => {
+const Match = ({ match, makePrediction, user, hideOld }) => {
 
   // TODO add draw points
 
@@ -23,7 +23,6 @@ const Match = ({ match, makePrediction, user }) => {
   const [hasEnded, setHasEnded] = useState(false)
   const [homeGoalsResult, setHomeGoalsResult] = useState('')
   const [awayGoalsResult, setAwayGoalsResult] = useState('')
-  const [pointsGained, setPointsGained] = useState(0)
   const [pointsExplanation, setPointsExplanation] = useState('')
   const [otherPredictions, setOtherPredictions] = useState([])
 
@@ -54,9 +53,6 @@ const Match = ({ match, makePrediction, user }) => {
     setAwayGoalsPrediction(event.target.value);
   };
 
-
-
-
   const handleMakePrediction = () => {
     const homeToSend = homeGoalsPrediction === '' ? 0 : Number(homeGoalsPrediction);
     const awayToSend = awayGoalsPrediction === '' ? 0 : Number(awayGoalsPrediction);
@@ -68,7 +64,6 @@ const Match = ({ match, makePrediction, user }) => {
       setAwayGoalsPredictionToShow(awayToSend);
     }
   };
-
 
   // check if user has already made a prediction for the game
   // if true, then his prediction is shown instead of goal input forms
@@ -106,13 +101,11 @@ const Match = ({ match, makePrediction, user }) => {
           }
         }
       }
-
       return false; // Return false if match is not found in predictions
     } catch (err) {
       console.log("Error fetching predictions:", err);
     }
   }
-
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -137,13 +130,18 @@ const Match = ({ match, makePrediction, user }) => {
     return daysDiff >= 1.5;
   };
 
+  const isOldMatch = () => {
+    if (hideOld) {
+      const today = new Date();
+      const matchDate = new Date(match.date);
+      return matchDate < today;
+    }
+  }
+
   const isMatchInHistory = async () => {
     // Check if the match ended more than 3 hours ago
-    if (match.winner) { // 3 hours in milliseconds
+    if (match.winner) {
       setHasEnded(true)
-
-      // TODO add draw points
-
       await userHasAlreadyMadePredicion()
       setHomeGoalsResult(match.homeGoals);
       setAwayGoalsResult(match.awayGoals);
@@ -156,11 +154,14 @@ const Match = ({ match, makePrediction, user }) => {
     return null;
   }
 
+  if (isOldMatch()) {
+    return null
+  }
+
   return (
     <div className='matchContainerStyle'>
       <div className='matchStyle' display={'flex'}>
         <div className='timeStyle'>
-
         <span >{matchTime}</span>
         </div>
         <div style={{justifyContent: 'center', alignItems: 'center'}} className='resultStyle'>
@@ -177,7 +178,6 @@ const Match = ({ match, makePrediction, user }) => {
                   maxWidth: '100%',
                   maxHeight: '100%',
                   objectFit: 'contain',
-                  //borderRadius: '50%',
                 }}
               />
             </div>
@@ -213,7 +213,6 @@ const Match = ({ match, makePrediction, user }) => {
                   maxWidth: '100%',
                   maxHeight: '100%',
                   objectFit: 'contain',
-                  //borderRadius: '50%',
                 }}
               />
             </div>
@@ -264,8 +263,9 @@ Match.propTypes = {
   user: PropTypes.shape({
     token: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
-  })
-};
+  }),
+  hideOld: PropTypes.bool.isRequired
+}
 
 
 export default Match
