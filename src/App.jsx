@@ -14,8 +14,8 @@ const App = () => {
   const [newUserUsername, setNewUserUsername] = useState('')
   const [newUserPassword, setNewUserPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
   const [notification, setNotification] = useState(null)
+  const [notificationType, setNotificationType] = useState(null)
   const [predictionMade, setPredictionMade] = useState(false)
   const [showInfo, setShowInfo] = useState(false)
     
@@ -87,9 +87,10 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('Incorrect username or password')
+      setNotification('Incorrect username or password')
+      setNotificationType('warning')
       setTimeout( () => {
-        setErrorMessage(null)
+        setNotification(null)
       }, 5000)
     }
     console.log('logging in with', username, password)
@@ -139,7 +140,7 @@ const App = () => {
   const loginForm = () => {
     return (
       <form onSubmit={handleLogin}>
-        <Notification message={errorMessage} style={notificationStyle} />
+        <Notification message={notification} style={notificationStyle} />
         <div style={{ marginBottom: '10px' }}>
         <div style={inputContainerStyle}>
           <h2>Kirjaudu sisään</h2>
@@ -188,9 +189,10 @@ const App = () => {
         setNewUserPassword('')
         setNewUserUsername('')
     } catch (exception) {
-        setErrorMessage('Error signing up')
+        setNotification('Error signing up')
+        setNotificationType('warning')
         setTimeout( () => {
-        setErrorMessage(null)
+        setNotification(null)
         }, 5000)
     }
     console.log('logging in with', username, password)
@@ -200,7 +202,7 @@ const App = () => {
 const signupForm = () => {
     return (
         <form onSubmit={handleSignup}>
-          <Notification message={errorMessage} style={notificationStyle} />
+          <Notification message={notification} style={notificationStyle} />
           <div style={{ marginBottom: '10px' }}>
           <div style={inputContainerStyle}>
             <label style={labelStyle}>käyttäjätunnus</label>
@@ -258,8 +260,10 @@ const signupForm = () => {
       console.log(response)
       if (response.status === 201) {
         setNotification(`Veikkaus ${match.home} ${homeGoalsPrediction} - ${awayGoalsPrediction} ${match.away} isketty sisään`)
+        setNotificationType('success')
         setTimeout( () => {
           setNotification(null)
+          setNotificationType(null)
           matchService.getAll().then(matches =>
             setMatches(matches)
           );
@@ -267,33 +271,40 @@ const signupForm = () => {
           }, 5000)
           return true
       } else {
-          setNotification("Veikkauksen tallentaminen ei onnistunut. Johtuu varmaan lukaksesta :/(ile on hidas)")
+          setNotification("Veikkauksen tallentaminen ei onnistunut")
+          setNotificationType('warning')
           setTimeout( () => {
             setNotification(null)
-            }, 5000)
+            setNotificationType(null)
+            }, 10000)
             return false
       }
     } catch (err) {
-      setNotification("Veikkauksen tallentaminen ei onnistunut. Johtuu varmaan lukaksesta :/(ile on hidas)")
+      setNotification("Veikkauksen tallentaminen ei onnistunut")
+      setNotificationType('warning')
       setTimeout( () => {
         setNotification(null)
-        }, 5000)
+        setNotificationType(null)
+        }, 10000)
       return false
     }
   }
 
-  const handleTest = (input) => {
-    setNotification("testiiii")
+  const handleTest = () => {
+    setNotification("Veikkauksen tallentaminen onnistunut")
+    setNotificationType('success')
     setTimeout( () => {
       setNotification(null)
-      }, 5000)
+      setNotificationType(null)
+      }, 10000)
     console.log("here")
   }
   
   if (user) {
     return(
       <div>
-        <Notification message={notification}/>
+        <button onClick={handleTest}>button</button>
+        <Notification message={notification} type={"success"} />
       <div style={mtachStyle}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background:'', }}>
         <p>{user.username}</p>
@@ -310,8 +321,6 @@ const signupForm = () => {
           </ul>
         )}
       </div>
-        <Notification message={notification}/>
-        <Notification message={errorMessage}/>
         {matches.map(match =>
           <Match key={match.id}
             match={match}

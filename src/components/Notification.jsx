@@ -1,43 +1,63 @@
-import miika from '../styles/miika3.jpg'
-//https://mail.google.com/mail/u/0?ui=2&ik=e87176f844&attid=0.1&permmsgid=msg-a:r-2877609696891080198&th=1904fd3983b6847e&view=fimg&fur=ip&sz=s0-l75-ft&attbid=ANGjdJ_74A_B8SOOyziuR8TlXWGueuc3BiXnpfMtbKm2inLXMgulw13u9XV6ROlGVPkqY49JlYVyf8PQx0ZrjiFib80FYy523gi7gt5pniJm11he_AW0kQlz1p60920&disp=emb&realattid=4DC63109-CE29-42AC-A459-66A96327755B
-const notificationStyle = {
-  position: 'fixed',
-  top: '0',
-  left: '0',
-  width: '100%',
-  padding: '20px',
-  //boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-  zIndex: 1000,
-  minHeight: '420px',
-  backgroundImage: `url(${miika})`,
-  backgroundSize: '100% auto',
-  backgroundRepeat: 'no-repeat',
-  backgroundPosition: 'contain',
-  display: 'flex',
+import  '../styles/notificationStyle.css'
+import miika from './miika.png'
+const icons = {
+  success: miika,
+  danger: miika,
+  warning: miika,
+  info: miika,
+};
+
+const notificationStyles = {
+  base: {
+    position: 'fixed',
+    top: '25px',
+    right: '25px',
+    maxWidth: '300px',
+    background: '#fff',
+    padding: '0.5rem 1rem',
+    borderRadius: '10px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
+    zIndex: 1023,
+    display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    color: '#fff',
-    fontWeight: 'bold', // Adjust font weight as needed
-    overflow: 'hidden',
-    //textShadow: '0 0 20px black',
-    fontSize: '4vw',
-    textShadow: '0 0 20px rgba(0, 0, 0, 0.5)', // Text shadow for better readability
-    filter: 'brightness(80%) contrast(110%)', // Adjust brightness and contrast
-    boxShadow: '0 0 20px rgba(0, 0, 0, 0.2) inset'
+    animation: 'slideInRight 0.3s ease-in-out forwards, fadeOut 0.5s ease-in-out forwards 3s',
+  },
+  success: { background: '#d4f3e0' },
+  danger: { background: '#efaca5' },
+  info: { background: '#bddaed' },
+  warning: { background: '#ead994' },
+};
+
+const iconStyles = {
+  width: '120px', // Adjust the size as needed
+  height: 'auto', // Maintain aspect ratio
+  marginRight: '8px', // Adjust spacing if necessary
 };
 
 // eslint-disable-next-line react/prop-types
-const Notification = ({ message }) => {
+const Notification = ({ message, type }) => {
+
+  const style = {
+    ...notificationStyles.base,
+    ...(notificationStyles[type] || notificationStyles.info),
+  };
+
     if (message === null) {
       return null
     }
   
     return (
-      <div style={notificationStyle}>
-        {message}
+      <div style={style} className={`notification notification-${type}`}>
+        <span className="icon">
+          {type === 'success' && <img src={icons.success} style={iconStyles}/>}
+          {type === 'danger' && <img src={icons.success} style={iconStyles}/>}
+          {type === 'info' && <img src={icons.success} style={iconStyles}/>}
+          {type === 'warning' && <img src={icons.success} style={iconStyles}/>}
+        </span>
+        <span className="toast-message">{message}</span>
+        <div className='toast-progress'></div>
       </div>
-    )
+    );
   }
   
   export default Notification
