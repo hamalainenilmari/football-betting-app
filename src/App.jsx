@@ -290,20 +290,10 @@ const signupForm = () => {
     }
   }
 
-  const handleTest = () => {
-    setNotification("Veikkauksen tallentaminen onnistunut")
-    setNotificationType('success')
-    setTimeout( () => {
-      setNotification(null)
-      setNotificationType(null)
-      }, 10000)
-    console.log("here")
-  }
   
   if (user) {
     return(
       <div>
-        <button onClick={handleTest}>button</button>
         <Notification message={notification} type={"success"} />
       <div style={mtachStyle}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background:'', }}>
