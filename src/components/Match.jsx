@@ -133,7 +133,9 @@ const Match = ({ match, makePrediction, user, hideOld }) => {
   const isOldMatch = () => {
     if (hideOld) {
       const today = new Date();
+      today.setHours(0,0,0,0)
       const matchDate = new Date(match.date);
+      matchDate.setHours(0,0,0,0)
       return matchDate < today;
     }
   }
