@@ -18,8 +18,12 @@ const App = () => {
   const [notificationType, setNotificationType] = useState(null)
   const [predictionMade, setPredictionMade] = useState(false)
   const [showInfo, setShowInfo] = useState(false)
+  
   const [hideOld, setHideOld] = useState(true)
   const [hideOldInfoText, setHideOldInfoText] = useState("näytä vanhat pelit")
+
+  const [hideFuture, setHideFuture] = useState(true)
+  const [hideFutureInfoText, setHideFutureInfoText] = useState("näytä myöhemmät pelit")
     
   let token = null
 
@@ -303,6 +307,16 @@ const signupForm = () => {
       setHideOldInfoText("näytä vanhat pelit")
     }
   }
+
+  const handleHideFutureGames = () => {
+    if (hideFuture) {
+      setHideFuture(!hideFuture)
+      setHideFutureInfoText("piiloita myöhemmät pelit")
+    } else {
+      setHideFuture(!hideFuture)
+      setHideFutureInfoText("näytä myöhemmät pelit")
+    }
+  }
   
   
   if (user) {
@@ -332,8 +346,10 @@ const signupForm = () => {
             makePrediction={makePrediction}
             user={user}
             hideOld={hideOld}
+            hideFuture={hideFuture}
           />
         )}
+        <button onClick={() => handleHideFutureGames()} style={infoButtonStyle}>{hideFutureInfoText}</button>
         <Table />
       </div>
       </div>

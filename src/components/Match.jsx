@@ -5,7 +5,7 @@ import { teamStyle, timeStyle, matchStyle, buttonStyle, matchContainerStyle, goa
 import '../styles/matchstyle.css'
 import predictionsService from '../services/predictions'
 
-const Match = ({ match, makePrediction, user, hideOld }) => {
+const Match = ({ match, makePrediction, user, hideOld, hideFuture }) => {
 
   // TODO add draw points
 
@@ -42,6 +42,7 @@ const Match = ({ match, makePrediction, user, hideOld }) => {
     predictionsService.getAllForTheMatch(match.id).then(preds =>
       setOtherPredictions(preds.filter(pred => pred.username !== user.username).sort((a, b) => b.points - a.points))
     )
+    console.log(match)
   }, [hasEnded, predictionMade]);
 
 
@@ -76,8 +77,6 @@ const Match = ({ match, makePrediction, user, hideOld }) => {
         for (const matchToSearch of response.data) {
           // if found a prediction for the same matchId as the match to show
           if (matchToSearch.matchId === match.id) {
-            console.log("user has made prediction for match: " + match.home + "-" + match.away)
-            console.log("pred:" + JSON.stringify(matchToSearch))
             // add goals to show for the match to be the users prediction
             setHomeGoalsPredictionToShow(matchToSearch.homeGoals);
             setAwayGoalsPredictionToShow(matchToSearch.awayGoals);
@@ -123,11 +122,13 @@ const Match = ({ match, makePrediction, user, hideOld }) => {
   };
 
   const isMatchInFuture = () => {
-    const today = new Date();
-    const matchDate = new Date(match.date);
-    const timeDiff = matchDate.getTime() - today.getTime();
-    const daysDiff = timeDiff / (1000 * 3600 * 24);
-    return daysDiff >= 1.5;
+    if (hideFuture) {
+      const today = new Date();
+      const matchDate = new Date(match.date);
+      const timeDiff = matchDate.getTime() - today.getTime();
+      const daysDiff = timeDiff / (1000 * 3600 * 24);
+      return daysDiff >= 1.5;
+    }
   };
 
   const isOldMatch = () => {
@@ -152,6 +153,7 @@ const Match = ({ match, makePrediction, user, hideOld }) => {
   };
 
   // If match is two or more days later than today, don't render
+  
   if (isMatchInFuture()) {
     return null;
   }
@@ -266,7 +268,8 @@ Match.propTypes = {
     token: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
   }),
-  hideOld: PropTypes.bool.isRequired
+  hideOld: PropTypes.bool.isRequired,
+  hideFuture: PropTypes.bool.isRequired
 }
 
 

@@ -9,7 +9,6 @@ const getAll = async () => {
 
 const getAllForTheMatch = async (matchId) => {
     const response = await axios.get(baseUrl + `/match/${matchId}`)
-    console.log("predictions for a match: " + response.data)
     return response.data
 }
 
