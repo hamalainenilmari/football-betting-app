@@ -8,7 +8,7 @@
     border-radius: 4px;
     box-shadow: 5 5 10px rgba(0, 0, 0, 0.3);
     z-index: 1023;
-    animation: slideInRight 0.3s ease-in-out forwards, fadeOut 0.5s ease-in-out forwards 3s;
+    animation: slideInRight 0.3s ease-in-out forwards, fadeOut 0.5s ease-in-out forwards 5s;
 }
 
 .toast-progress {

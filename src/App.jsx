@@ -101,6 +101,12 @@ const App = () => {
       }, 10000)
     }
     console.log('logging in with', username, password)
+    setNotification(`Tervetuloa takaisin ${username}!`)
+    setNotificationType('login')
+    setTimeout( () => {
+      setNotification(null)
+      setNotificationType(null)
+    }, 10000)
   }
 
   const logout = () => {

@@ -1,10 +1,12 @@
 import  '../styles/notificationStyle.css'
 import miika from './miika.png'
+import yahye from '../styles/yahye.png'
 const icons = {
   success: miika,
   danger: miika,
   warning: miika,
   info: miika,
+  login: yahye
 };
 
 const notificationStyles = {
@@ -53,6 +55,7 @@ const Notification = ({ message, type }) => {
           {type === 'danger' && <img src={icons.success} style={iconStyles}/>}
           {type === 'info' && <img src={icons.success} style={iconStyles}/>}
           {type === 'warning' && <img src={icons.success} style={iconStyles}/>}
+          {type === 'login' && <img src={icons.login} style={iconStyles}/>}
         </span>
         <span className="toast-message">{message}</span>
         <div className='toast-progress'></div>
