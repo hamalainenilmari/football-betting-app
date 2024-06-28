@@ -1,12 +1,24 @@
+import _ from 'lodash'
 import  '../styles/notificationStyle.css'
 import miika from './miika.png'
 import yahye from '../styles/yahye.png'
+import dani from '../styles/dani2.png'
+import jami from '../styles/jami.png'
+
+
+function getRandomPic() {
+  const pics = [miika, yahye, dani, jami]
+  const int = _.random(0, pics.length - 1)
+  console.log("rand " + int)
+  return pics[int]
+}
+
 const icons = {
-  success: miika,
-  danger: miika,
-  warning: miika,
-  info: miika,
-  login: yahye
+  success: getRandomPic(),
+  danger: getRandomPic(),
+  warning: getRandomPic(),
+  info: getRandomPic(),
+  login: getRandomPic()
 };
 
 const notificationStyles = {

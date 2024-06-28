@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { teamStyle, timeStyle, matchStyle, buttonStyle, matchContainerStyle, goalsInputStyle } from '../styles/matchStyle'
+//import { teamStyle, timeStyle, matchStyle, buttonStyle, matchContainerStyle, goalsInputStyle } from '../styles/matchStyle'
 import '../styles/matchstyle.css'
 import predictionsService from '../services/predictions'
 
-const Match = ({ match, makePrediction, user, hideOld, hideFuture }) => {
+
+const Match = ({ match, user, hideOld, hideFuture, setNotification, setNotificationType, setMatches }) => {
 
   // TODO add draw points
 
@@ -42,8 +43,7 @@ const Match = ({ match, makePrediction, user, hideOld, hideFuture }) => {
     predictionsService.getAllForTheMatch(match.id).then(preds =>
       setOtherPredictions(preds.filter(pred => pred.username !== user.username).sort((a, b) => b.points - a.points))
     )
-    console.log(match)
-  }, [hasEnded, predictionMade]);
+  }, [hasEnded, predictionMade, predictionExists]);
 
 
   const handleHomeGoalsPrediction = (event) => {
@@ -57,7 +57,7 @@ const Match = ({ match, makePrediction, user, hideOld, hideFuture }) => {
   const handleMakePrediction = () => {
     const homeToSend = homeGoalsPrediction === '' ? 0 : Number(homeGoalsPrediction);
     const awayToSend = awayGoalsPrediction === '' ? 0 : Number(awayGoalsPrediction);
-    const success = makePrediction(match, homeToSend, awayToSend);
+    const success = predictionsService.makePrediction(match, homeToSend, awayToSend, user, setNotification, setNotificationType, setMatches, setPredictionMade, setPredictionExists);
     if (success) {
       setPredictionMade(true)
       //setPredictionExists(true)
@@ -237,7 +237,7 @@ const Match = ({ match, makePrediction, user, hideOld, hideFuture }) => {
             <button onClick={() => setShowOthers(!showOthers)}>
               Näytä muiden vedot
             </button>
-            <div >
+            <div>
               {showOthers && otherPredictions.map(prediction => (
                 <span key={prediction.id} style={{paddingLeft: '1px', paddingRight: '1px'}}>
                   {prediction.username} {prediction.homeGoals}-{prediction.awayGoals} ({prediction.points}p)&nbsp;&nbsp;&nbsp;
@@ -263,13 +263,15 @@ Match.propTypes = {
     awayGoals: PropTypes.number,
     winner: PropTypes.string
   }).isRequired,
-  makePrediction: PropTypes.func.isRequired,
   user: PropTypes.shape({
     token: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
   }),
   hideOld: PropTypes.bool.isRequired,
-  hideFuture: PropTypes.bool.isRequired
+  hideFuture: PropTypes.bool.isRequired,
+  setNotification: PropTypes.func.isRequired,
+  setNotificationType: PropTypes.func.isRequired, 
+  setMatches: PropTypes.func.isRequired
 }
 
 

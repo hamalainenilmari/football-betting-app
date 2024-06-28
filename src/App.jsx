@@ -1,22 +1,22 @@
 import { useState, useEffect } from 'react'
 import matchService from './services/matches'
-import {login, signup} from './services/userManagement'
+import {login} from './services/userManagement'
 import Notification from './components/Notification'
 import Match from './components/Match'
-import axios from 'axios'
 import Table from './components/Table'
+import { buttonStyle, infoButtonStyle, inputContainerStyle, labelStyle, inputStyle, matchStyle } from './styles/appStyle'
 
 
 const App = () => {
-  const [matches, setMatches] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [newUserUsername, setNewUserUsername] = useState('')
-  const [newUserPassword, setNewUserPassword] = useState('')
   const [user, setUser] = useState(null)
+
+  const [matches, setMatches] = useState([])
+
   const [notification, setNotification] = useState(null)
   const [notificationType, setNotificationType] = useState(null)
-  const [predictionMade, setPredictionMade] = useState(false)
+
   const [showInfo, setShowInfo] = useState(false)
   
   const [hideOld, setHideOld] = useState(true)
@@ -34,7 +34,7 @@ const App = () => {
     matchService.getAll().then(matches =>
       setMatches( matches.sort((a,b) => new Date(a.date).getTime() - new Date(b.date).getTime()))
     )
-  }, [predictionMade])
+  }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -45,38 +45,6 @@ const App = () => {
     }
   }, [])
 
-  const inputContainerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    background: ''
-  };
-  
-  const labelStyle = {
-    marginBottom: '5px',
-    fontSize: '14px',
-    background: ''
-  };
-  
-  const inputStyle = {
-    padding: '8px',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    transition: 'border-color 0.3s ease',
-    fontSize: '16px',
-  };
-  
-  const notificationStyle = {
-    transition: 'opacity 0.3s ease',
-  };
-  const mtachStyle ={
-    
-    alignItems: 'flex',
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-    background: 'white'
-
-  }
-   
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -100,7 +68,6 @@ const App = () => {
         setNotificationType(null)
       }, 10000)
     }
-    console.log('logging in with', username, password)
     setNotification(`Tervetuloa takaisin ${username}!`)
     setNotificationType('login')
     setTimeout( () => {
@@ -113,43 +80,6 @@ const App = () => {
     window.localStorage.removeItem('loggedUser')
     setUser(null)
   }
-
-  const buttonStyle = {
-    padding: '8px 16px',
-    background: '#007bff',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s ease',
-    fontSize: '16px',
-  };
-
-  const infoButtonStyle = {
-    padding: '4px 8px',
-    background: '#007bff',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '3px',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s ease',
-    fontSize: '14px',
-    marginBottom: '5px'
-  };
-  /*
-  buttonStyle:hover = {
-    background: '#0056b3',
-  };
-  */
-
-  const infoStyle = {
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    transition: 'opacity 0.5s ease-in-out',
-    opacity: showInfo ? 1 : 0,
-    maxHeight: showInfo ? '100px' : '0',
-    overflow: 'hidden',
-    fontSize: '12px'
-  };
 
   const loginForm = () => {
     return (
@@ -187,123 +117,6 @@ const App = () => {
     )
   }
 
-  const handleSignup = async (event) => {
-    event.preventDefault()
-
-    try {
-        const user = await signup({
-        username: newUserUsername,
-        password: newUserPassword
-        })
-        window.localStorage.setItem(
-        'loggedUser', JSON.stringify(user)
-        )
-        setToken(user.token)
-        setUser(user)
-        setNewUserPassword('')
-        setNewUserUsername('')
-    } catch (exception) {
-        setNotification('Error signing up')
-        setNotificationType('danger')
-        setTimeout( () => {
-        setNotification(null)
-        }, 10000)
-    }
-    console.log('logging in with', username, password)
-}
-
-
-const signupForm = () => {
-    return (
-        <form onSubmit={handleSignup}>
-          <Notification message={notification} style={notificationStyle} />
-          <div style={{ marginBottom: '10px' }}>
-          <div style={inputContainerStyle}>
-            <label style={labelStyle}>käyttäjätunnus</label>
-            <input
-              data-testid='newUserUsername'
-              type="text"
-              value={newUserUsername}
-              name="Username"
-              onChange={({ target }) => setNewUserUsername(target.value)}
-              style={inputStyle}
-            />
-          </div>
-          </div>
-          <div style={{ marginBottom: '10px' }}>
-          <div style={inputContainerStyle}>
-            <label style={labelStyle}>salasana</label>
-              <input
-              data-testid='newUserPassword'
-              type="password"
-              value={newUserPassword}
-              name="Password"
-              onChange={({ target }) => setNewUserPassword(target.value)}
-              style={inputStyle}
-              />
-          </div>
-          </div>
-          <button style={buttonStyle} type="submit">Luo tunnus</button>
-        </form>
-    )
-  }
-
-  const appStyle = {
-    backgroundImage: `url(./styles/bg1.png)`,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    height: '100vh', // Adjust according to your needs
-    width: '100vw',  // Adjust according to your needs
-  };
-  
-
-  const makePrediction = async ( match, homeGoalsPrediction, awayGoalsPrediction ) => {
-    try {
-      console.log("goals: " + homeGoalsPrediction, awayGoalsPrediction)
-      const prediction = {
-        username: user.username,
-        matchId: match.id,
-        home: match.home,
-        away: match.away,
-        homeGoals: homeGoalsPrediction,
-        awayGoals: awayGoalsPrediction,
-        winner: homeGoalsPrediction > awayGoalsPrediction ? match.home : awayGoalsPrediction > homeGoalsPrediction ? match.away : 'draw',
-      }
-      const response = await axios.post('https://footballpredictapp-backend.onrender.com/api/predictions', prediction);
-      console.log(response)
-      if (response.status === 201) {
-        setNotification(`Veikkaus ${match.home} ${homeGoalsPrediction} - ${awayGoalsPrediction} ${match.away} isketty sisään`)
-        setNotificationType('success')
-        setTimeout( () => {
-          setNotification(null)
-          setNotificationType(null)
-          matchService.getAll().then(matches =>
-            setMatches(matches)
-          );
-          setPredictionMade(true)
-          }, 10000)
-          return true
-      } else {
-          setNotification("Veikkauksen tallentaminen ei onnistunut")
-          setNotificationType('danger')
-          setTimeout( () => {
-            setNotification(null)
-            setNotificationType(null)
-            }, 10000)
-            return false
-      }
-    } catch (err) {
-      setNotification("Veikkauksen tallentaminen ei onnistunut")
-      setNotificationType('danger')
-      setTimeout( () => {
-        setNotification(null)
-        setNotificationType(null)
-        }, 10000)
-      return false
-    }
-  }
-
   const handleHideOldGames = () => {
     if (hideOld) {
       setHideOld(!hideOld)
@@ -323,13 +136,21 @@ const signupForm = () => {
       setHideFutureInfoText("näytä myöhemmät pelit")
     }
   }
-  
+
+  const infoStyle = {
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    transition: 'opacity 0.5s ease-in-out',
+    opacity: showInfo ? 1 : 0,
+    maxHeight: showInfo ? '100px' : '0',
+    overflow: 'hidden',
+    fontSize: '12px'
+  };
   
   if (user) {
     return(
       <div>
         <Notification message={notification} type={notificationType} />
-      <div style={mtachStyle}>
+      <div style={matchStyle}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background:'', }}>
         <p>{user.username}</p>
         <p><button onClick={logout}>Kirjaudu ulos</button></p>
@@ -349,10 +170,12 @@ const signupForm = () => {
         {matches.map(match =>
           <Match key={match.id}
             match={match}
-            makePrediction={makePrediction}
             user={user}
             hideOld={hideOld}
             hideFuture={hideFuture}
+            setNotification={setNotification}
+            setNotificationType={setNotificationType}
+            setMatches={setMatches}
           />
         )}
         <button onClick={() => handleHideFutureGames()} style={infoButtonStyle}>{hideFutureInfoText}</button>
@@ -371,6 +194,3 @@ const signupForm = () => {
 }
 
 export default App
-
-/*<h2>Luo uusi käyttäjä</h2>
-        {signupForm()}*/
