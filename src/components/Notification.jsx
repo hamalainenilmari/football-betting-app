@@ -4,10 +4,14 @@ import miika from './miika.png'
 import yahye from '../styles/yahye.png'
 import dani from '../styles/dani2.png'
 import jami from '../styles/jami.png'
+import roope from '../styles/roope.png'
+import lukas from '../styles/lukas.png'
+import janne from '../styles/janne.png'
+import miikka from '../styles/janne.png'
 
 
 function getRandomPic() {
-  const pics = [miika, yahye, dani, jami]
+  const pics = [miika, yahye, dani, jami, roope, lukas, janne, miikka]
   const int = _.random(0, pics.length - 1)
   console.log("rand " + int)
   return pics[int]

@@ -4,6 +4,8 @@ import axios from 'axios';
 //import { teamStyle, timeStyle, matchStyle, buttonStyle, matchContainerStyle, goalsInputStyle } from '../styles/matchStyle'
 import '../styles/matchstyle.css'
 import predictionsService from '../services/predictions'
+import '../styles/ownPrediction.css'
+
 
 
 const Match = ({ match, user, hideOld, hideFuture, setNotification, setNotificationType, setMatches }) => {
@@ -162,6 +164,16 @@ const Match = ({ match, user, hideOld, hideFuture, setNotification, setNotificat
     return null
   }
 
+  /*
+  const predictionsStyle = {
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    transition: 'opacity 0.5s ease-in-out',
+    color:  ? 1 : 0,
+    overflow: 'hidden',
+    fontSize: '12px'
+  };
+  */
+
   return (
     <div className='matchContainerStyle'>
       <div className='matchStyle' display={'flex'}>
@@ -232,7 +244,7 @@ const Match = ({ match, user, hideOld, hideFuture, setNotification, setNotificat
       <div>
         {(predictionExists || predictionMade || matchStarted) && (
           <div className='endResultStyle'>
-              {hasEnded ? <p style={{textAlign: 'center'}}>oma veikkaus {homeGoalsPredictionToShow}-{awayGoalsPredictionToShow} pojoja saatu: {predictionPoints} ({pointsExplanation})</p> : 
+              {hasEnded ? <p className={ predictionPoints === 10 ? "glow" : "normal"} >oma veikkaus {homeGoalsPredictionToShow}-{awayGoalsPredictionToShow} pojoja saatu: {predictionPoints} ({pointsExplanation})</p> : 
               <p>oma veikkaus {homeGoalsPredictionToShow}-{awayGoalsPredictionToShow}</p>}
             <button onClick={() => setShowOthers(!showOthers)}>
               Näytä muiden vedot
@@ -276,3 +288,5 @@ Match.propTypes = {
 
 
 export default Match
+
+//, color: prediction.points === 10 ? '#32CD32' : prediction.points >= 3  ? "#FFA500" : prediction.points === 1 ? "gray" : "red" 

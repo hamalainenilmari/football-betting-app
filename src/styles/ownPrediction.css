@@ -1,0 +1,39 @@
+.normal {
+  font-size: 12px;
+  color: #070707;
+  text-align: center;
+}
+
+.glow {
+  font-size: 12px;
+  color: #070707;
+  text-align: center;
+  text-shadow: 
+    0 0 2px rgba(0, 0, 0, 0.1); /* Subtle shadow for initial appearance */
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+@keyframes glow {
+    from {
+      text-shadow: 
+        0 0 10px #fff, /* White glow */
+        0 0 20px #fff, /* White glow */
+        0 0 30px #00b3ff, /* Sky blue */
+        0 0 40px #009dff, /* Deep sky blue */
+        0 0 50px #0077ff, /* Azure */
+        0 0 60px #005eff, /* Sapphire */
+        0 0 70px #0044ff; /* Royal blue */
+    }
+    to {
+      text-shadow: 
+        0 0 20px #fff, /* White glow */
+        0 0 30px #00b3ff, /* Sky blue */
+        0 0 40px #009dff, /* Deep sky blue */
+        0 0 50px #0077ff, /* Azure */
+        0 0 60px #005eff, /* Sapphire */
+        0 0 70px #ff4da6, /* Pinkish gold */
+        0 0 80px #ff4da6; /* Pinkish gold */
+    }
+  }
+  
