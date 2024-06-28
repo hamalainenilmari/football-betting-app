@@ -14,7 +14,7 @@ const notificationStyles = {
     position: 'fixed',
     top: '25px',
     right: '25px',
-    maxWidth: '300px',
+    maxWidth: '80%',
     background: '#fff',
     padding: '0.5rem 1rem',
     borderRadius: '10px',
