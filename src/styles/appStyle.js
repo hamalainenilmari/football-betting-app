@@ -20,7 +20,7 @@ export const buttonStyle = {
     cursor: 'pointer',
     transition: 'background-color 0.3s ease',
     fontSize: '14px',
-    marginBottom: '5px'
+    marginBottom: '2px'
   };
 
 

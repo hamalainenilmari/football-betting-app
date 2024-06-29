@@ -5,7 +5,12 @@ import Notification from './components/Notification'
 import Match from './components/Match'
 import Table from './components/Table'
 import { buttonStyle, infoButtonStyle, inputContainerStyle, labelStyle, inputStyle, matchStyle } from './styles/appStyle'
-
+import './styles/wiggle.css'
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Button from '@mui/material/Button';
+import { styled } from '@mui/system';
 
 const App = () => {
   const [username, setUsername] = useState('')
@@ -66,14 +71,14 @@ const App = () => {
       setTimeout( () => {
         setNotification(null)
         setNotificationType(null)
-      }, 10000)
+      }, 5000)
     }
     setNotification(`Tervetuloa takaisin ${username}!`)
     setNotificationType('login')
     setTimeout( () => {
       setNotification(null)
       setNotificationType(null)
-    }, 10000)
+    }, 500)
   }
 
   const logout = () => {
@@ -137,6 +142,95 @@ const App = () => {
     }
   }
 
+  const BackdropStyle = styled('div')(({ theme }) => ({
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backdropFilter: 'blur(10px)',
+    zIndex: -1,
+  }));
+  
+  const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '80vw', // Use viewport width to make it responsive
+    maxWidth: '600px', // Set a maximum width
+    maxHeight: '80vh', // Set a maximum height
+    bgcolor: 'white',
+    border: '2px solid #000',
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+    padding: '16px',
+    borderRadius: '8px',
+    overflowY: 'auto',
+  };
+
+  const WiggleButton = styled(Button)(({ theme }) => ({
+    animation: 'wiggle 2s ease-in-out infinite',
+
+    '@keyframes wiggle': {
+      '0%': { transform: 'rotate(0deg)' },
+     '80%': { transform: 'rotate(0deg)' },
+     '85%': { transform: 'rotate(5deg)' },
+     '95%': { transform: 'rotate(-5deg)' },
+    '100%': { transform: 'rotate(0deg)' },
+  }
+  }));
+
+  const InfoModal = () => {
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    return (
+<div>
+      <WiggleButton variant="contained" color="primary" onClick={handleOpen}>
+        Info
+      </WiggleButton>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        closeAfterTransition
+        BackdropComponent={BackdropStyle}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Box sx={modalStyle}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Info pudotuspelien pisteistä
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Pudotuspelien pisteet saa samalla tavalla kun ennenkin (varsinainen peliaika), vaikka tulis jatkoaika/pilkut.
+            <br />
+            <br />
+            Jos oot veikannu et matsi päättyy tasan ja se päättyy tasan varsinaisella nii saat ne pojot iha sama kumpi menee jatkoon lopulta.
+            <br />
+            <br />
+            Jos oot veikannu et kotijoukkue voittaa ja varsinainen päättyy tasapeliin nii vaikka kotijoukkue voittais jatkoajalla, siitä ei tuu pisteitä.
+            <br />
+            <br />
+            Jos haluutte jonkin toisen tavan tähän nii infotkaa! (lukas on asiakaspalvelija)
+          </Typography>
+          <Button variant="contained" color="primary" onClick={handleClose} >Ok</Button>
+        </Box>
+      </Modal>
+    </div>
+    );
+    /*
+    window.alert(
+      "Pudotuspelien pisteet jakautuu samalla tavalla kun ennenkin (varsinainen peliaika), vaikka tulis jatkoaika/pilkut.\n\n" +
+      "Jos oot veikannu et matsi päättyy tasan ja se päättyy tasan varsinaisella nii saat ne pojot iha sama kumpi menee jatkoo.\n\n"+
+    "Jos oot veikannu et kotijoukkue voittaa ja varsinainen päättyy tasapeliin nii vaikka kotijoukkue voittais jatkoajalla, siitä ei tuu pisteitä.")
+    */
+    }
+
   const infoStyle = {
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     transition: 'opacity 0.5s ease-in-out',
@@ -155,6 +249,7 @@ const App = () => {
         <p>{user.username}</p>
         <p><button onClick={logout}>Kirjaudu ulos</button></p>
       </div>
+      <InfoModal />
       <p><button style={infoButtonStyle} onClick={() => setShowInfo(!showInfo)} >Näytä pisteiden jakautuminen</button></p>
       <div style={infoStyle}>
         {showInfo && (
