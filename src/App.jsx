@@ -79,7 +79,7 @@ const App = () => {
     setTimeout( () => {
       setNotification(null)
       setNotificationType(null)
-    }, 500)
+    }, 5000)
   }
 
   const logout = () => {
