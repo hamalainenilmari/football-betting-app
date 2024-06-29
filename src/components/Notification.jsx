@@ -47,9 +47,9 @@ const notificationStyles = {
 };
 
 const iconStyles = {
-  width: '120px', // Adjust the size as needed
-  height: 'auto', // Maintain aspect ratio
-  marginRight: '8px', // Adjust spacing if necessary
+  width: '120px', 
+  height: 'auto',
+  marginRight: '8px', 
 };
 
 // eslint-disable-next-line react/prop-types

@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
+import lukas from './styles/lukas.png'
 
 const App = () => {
   const [username, setUsername] = useState('')
@@ -207,7 +208,7 @@ const App = () => {
             Info pudotuspelien pisteistä
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Pudotuspelien pisteet saa samalla tavalla kun ennenkin (varsinainen peliaika), vaikka tulis jatkoaika/pilkut.
+            Pudotuspelien pisteet muodostuu samalla tavalla kun ennenkin (varsinainen peliaika), vaikka tulis jatkoaika/pilkut.
             <br />
             <br />
             Jos oot veikannu et matsi päättyy tasan ja se päättyy tasan varsinaisella nii saat ne pojot iha sama kumpi menee jatkoon lopulta.
@@ -218,6 +219,7 @@ const App = () => {
             <br />
             Jos haluutte jonkin toisen tavan tähän nii infotkaa! (lukas on asiakaspalvelija)
           </Typography>
+          <img src={lukas} style={{ maxWidth: '100%', height: 'auto' }} />
           <Button variant="contained" color="primary" onClick={handleClose} >Ok</Button>
         </Box>
       </Modal>
