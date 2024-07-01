@@ -174,14 +174,24 @@ const Match = ({ match, user, hideOld, hideFuture, setNotification, setNotificat
   };
   */
 
+  const extraTimeResult = () => {
+    if ((match.homeGoalsAET && match.awayGoalsAET) && (match.homeGoals !== match.homeGoalsAET || match.awayGoals !== match.awayGoalsAET)) {
+      return (
+        <p style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, 0)'}}>
+        ({match.homeGoalsAET} - {match.awayGoalsAET})
+      </p>
+      )
+    }
+  }
+
   return (
     <div className='matchContainerStyle'>
       <div className='matchStyle' display={'flex'}>
         <div className='timeStyle'>
         <span >{matchTime}</span>
         </div>
-        <div style={{justifyContent: 'center', alignItems: 'center'}} className='resultStyle'>
-        {!predictionExists ? (<p></p>) : hasEnded ? <span style={{color:"white"}}>Lopputulos</span>: <span>Matsi ei alkanut/kesken</span>}
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1, position: 'relative' }} className='resultStyle'>
+        {!predictionExists ? (<p></p>) : hasEnded ? <><span style={{color:"white"}}>Lopputulos</span> {extraTimeResult()}</>: <span>Matsi ei alkanut/kesken</span>}
         </div>
         <div className='predictionContainerStyle'>
           <div>
@@ -273,6 +283,8 @@ Match.propTypes = {
     awayLogo: PropTypes.string.isRequired,
     homeGoals: PropTypes.number,
     awayGoals: PropTypes.number,
+    homeGoalsAET: PropTypes.number,
+    awayGoalsAET: PropTypes.number,
     winner: PropTypes.string
   }).isRequired,
   user: PropTypes.shape({

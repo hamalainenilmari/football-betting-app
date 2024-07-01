@@ -208,7 +208,7 @@ const App = () => {
             Info pudotuspelien pisteistä
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Pudotuspelien pisteet muodostuu samalla tavalla kun ennenkin (varsinainen peliaika), vaikka tulis jatkoaika/pilkut.
+            Pudotuspelien pisteet muodostuu samalla tavalla kun ennenkin, vaikka tulis jatkoaika/pilkut.
             <br />
             <br />
             Jos oot veikannu et matsi päättyy tasan ja se päättyy tasan varsinaisella nii saat ne pojot iha sama kumpi menee jatkoon lopulta.
@@ -219,7 +219,7 @@ const App = () => {
             <br />
             Jos haluutte jonkin toisen tavan tähän nii infotkaa! (lukas on asiakaspalvelija)
           </Typography>
-          <img src={lukas} style={{ maxWidth: '100%', height: 'auto' }} />
+          <img src={lukas} style={{ maxWidth: '100%', height: 'auto', maxHeight: '10%', justifyContent: "center" }} />
           <Button variant="contained" color="primary" onClick={handleClose} >Ok</Button>
         </Box>
       </Modal>
