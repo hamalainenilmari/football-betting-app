@@ -67,11 +67,11 @@ const Notification = ({ message, type }) => {
     return (
       <div style={style} className={`notification notification-${type}`}>
         <span className="icon">
-          {type === 'success' && <img src={icons.success} style={iconStyles}/>}
-          {type === 'danger' && <img src={icons.success} style={iconStyles}/>}
-          {type === 'info' && <img src={icons.success} style={iconStyles}/>}
-          {type === 'warning' && <img src={icons.success} style={iconStyles}/>}
-          {type === 'login' && <img src={icons.login} style={iconStyles}/>}
+          {type === 'success' && <img src={getRandomPic()} style={iconStyles}/>}
+          {type === 'danger' && <img src={getRandomPic()} style={iconStyles}/>}
+          {type === 'info' && <img src={getRandomPic()} style={iconStyles}/>}
+          {type === 'warning' && <img src={getRandomPic()} style={iconStyles}/>}
+          {type === 'login' && <img src={getRandomPic()} style={iconStyles}/>}
         </span>
         <span className="toast-message">{message}</span>
         <div className='toast-progress'></div>

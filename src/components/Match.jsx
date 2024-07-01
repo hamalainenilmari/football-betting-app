@@ -5,6 +5,7 @@ import axios from 'axios';
 import '../styles/matchstyle.css'
 import predictionsService from '../services/predictions'
 import '../styles/ownPrediction.css'
+import { isNumber } from 'lodash';
 
 
 
@@ -57,14 +58,23 @@ const Match = ({ match, user, hideOld, hideFuture, setNotification, setNotificat
   };
 
   const handleMakePrediction = () => {
-    const homeToSend = homeGoalsPrediction === '' ? 0 : Number(homeGoalsPrediction);
-    const awayToSend = awayGoalsPrediction === '' ? 0 : Number(awayGoalsPrediction);
-    const success = predictionsService.makePrediction(match, homeToSend, awayToSend, user, setNotification, setNotificationType, setMatches, setPredictionMade, setPredictionExists);
-    if (success) {
-      setPredictionMade(true)
-      //setPredictionExists(true)
-      setHomeGoalsPredictionToShow(homeToSend);
-      setAwayGoalsPredictionToShow(awayToSend);
+    if (!homeGoalsPrediction || !awayGoalsPrediction || !isNumber(homeGoalsPrediction) || !isNumber(awayGoalsPrediction) || (homeGoalsPrediction < 0) || (awayGoalsPrediction < 0) ) {
+      setNotification(`Veikkauksen laittaminen epäonnistui 🖕 tarkista mitä oot veikannu`)
+      setNotificationType('danger')
+      setTimeout( () => {
+        setNotification(null)
+        setNotificationType(null)
+      }, 5000)
+    } else {
+      const homeToSend = Number(homeGoalsPrediction);
+      const awayToSend = Number(awayGoalsPrediction);
+      const success = predictionsService.makePrediction(match, homeToSend, awayToSend, user, setNotification, setNotificationType, setMatches, setPredictionMade, setPredictionExists);
+      if (success) {
+        setPredictionMade(true)
+        //setPredictionExists(true)
+        setHomeGoalsPredictionToShow(homeToSend);
+        setAwayGoalsPredictionToShow(awayToSend);
+      }
     }
   };
 

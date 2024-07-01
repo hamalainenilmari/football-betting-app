@@ -41,16 +41,16 @@ const makePrediction = async ( match, homeGoalsPrediction, awayGoalsPrediction, 
           }, 5000)
           return true
       } else {
-          setNotification("Veikkauksen tallentaminen ei onnistunut")
+          setNotification("Veikkauksen tallentaminen ei onnistunut. Päivitä sivu ja kokeile uudestaan. Jos ei toimi vielkää ota yhteyttä ensin aspaan (lukas) ja sit toimariin (ile")
           setNotificationType('danger')
           setTimeout( () => {
             setNotification(null)
             setNotificationType(null)
-            }, 5000)
+            }, 7000)
             return false
       }
     } catch (err) {
-      setNotification("Veikkauksen tallentaminen ei onnistunut")
+      setNotification("Veikkauksen tallentaminen ei onnistunut. Päivitä sivu ja kokeile uudestaan. Jos ei toimi vielkää ota yhteyttä ensin aspaan (lukas) ja sit toimariin (ile)")
       setNotificationType('danger')
       setTimeout( () => {
         setNotification(null)
