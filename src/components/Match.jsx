@@ -13,8 +13,8 @@ const Match = ({ match, user, hideOld, hideFuture, setNotification, setNotificat
 
   // TODO add draw points
 
-  const [homeGoalsPrediction, setHomeGoalsPrediction] = useState('')
-  const [awayGoalsPrediction, setAwayGoalsPrediction] = useState('')
+  const [homeGoalsPrediction, setHomeGoalsPrediction] = useState(null)
+  const [awayGoalsPrediction, setAwayGoalsPrediction] = useState(null)
   const [homeGoalsPredictionToShow, setHomeGoalsPredictionToShow] = useState('')
   const [awayGoalsPredictionToShow, setAwayGoalsPredictionToShow] = useState('')
   const [winnerPrediction, setWinnerPrediction] = useState('')
@@ -57,8 +57,8 @@ const Match = ({ match, user, hideOld, hideFuture, setNotification, setNotificat
     setAwayGoalsPrediction(event.target.value);
   };
 
-  const handleMakePrediction = () => {
-    if ((homeGoalsPrediction < 0) || (awayGoalsPrediction < 0) ) {
+  const handleMakePrediction =  async () => {
+    if ( (homeGoalsPrediction === null) || (awayGoalsPrediction === null) || (homeGoalsPrediction < 0) || (awayGoalsPrediction < 0) ) {
       setNotification(`Veikkauksen laittaminen epäonnistui 🖕 tarkista mitä oot veikannu`)
       setNotificationType('danger')
       setTimeout( () => {
@@ -68,7 +68,7 @@ const Match = ({ match, user, hideOld, hideFuture, setNotification, setNotificat
     } else {
       const homeToSend = Number(homeGoalsPrediction);
       const awayToSend = Number(awayGoalsPrediction);
-      const success = predictionsService.makePrediction(match, homeToSend, awayToSend, user, setNotification, setNotificationType, setMatches, setPredictionMade, setPredictionExists);
+      const success = await predictionsService.makePrediction(match, homeToSend, awayToSend, user, setNotification, setNotificationType, setMatches, setPredictionMade, setPredictionExists);
       if (success) {
         setPredictionMade(true)
         //setPredictionExists(true)
