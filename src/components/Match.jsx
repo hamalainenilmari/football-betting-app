@@ -58,7 +58,7 @@ const Match = ({ match, user, hideOld, hideFuture, setNotification, setNotificat
   };
 
   const handleMakePrediction = () => {
-    if (!homeGoalsPrediction || !awayGoalsPrediction || !isNumber(homeGoalsPrediction) || !isNumber(awayGoalsPrediction) || (homeGoalsPrediction < 0) || (awayGoalsPrediction < 0) ) {
+    if ((homeGoalsPrediction < 0) || (awayGoalsPrediction < 0) ) {
       setNotification(`Veikkauksen laittaminen epäonnistui 🖕 tarkista mitä oot veikannu`)
       setNotificationType('danger')
       setTimeout( () => {
