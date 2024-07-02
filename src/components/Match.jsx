@@ -185,11 +185,24 @@ const Match = ({ match, user, hideOld, hideFuture, setNotification, setNotificat
   */
 
   const extraTimeResult = () => {
-    if ((match.homeGoalsAET && match.awayGoalsAET) && (match.homeGoals !== match.homeGoalsAET || match.awayGoals !== match.awayGoalsAET)) {
+    if (match.pen) {
       return (
-        <p style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, 0)'}}>
-        ({match.homeGoalsAET} - {match.awayGoalsAET})
+        <p style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -10%)',
+          whiteSpace: 'nowrap',
+          textAlign: 'center',
+      }}>
+        ({match.homeGoalsAET} - {match.awayGoalsAET}) pen {match.pen}
       </p>
+      )
+    } else if ((match.homeGoalsAET && match.awayGoalsAET) && (match.homeGoals !== match.homeGoalsAET || match.awayGoals !== match.awayGoalsAET)) {
+        return (
+          <p style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, 0)'}}>
+          ({match.homeGoalsAET} - {match.awayGoalsAET})
+        </p>
       )
     }
   }
@@ -295,7 +308,8 @@ Match.propTypes = {
     awayGoals: PropTypes.number,
     homeGoalsAET: PropTypes.number,
     awayGoalsAET: PropTypes.number,
-    winner: PropTypes.string
+    winner: PropTypes.string,
+    pen: PropTypes.string,
   }).isRequired,
   user: PropTypes.shape({
     token: PropTypes.string.isRequired,
