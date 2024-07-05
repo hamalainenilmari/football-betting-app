@@ -185,7 +185,7 @@ const Match = ({ match, user, hideOld, hideFuture, setNotification, setNotificat
   */
 
   const extraTimeResult = () => {
-    if (match.pen) {
+    if (match.pen && match.pen !== "null-null") {
       return (
         <p style={{
           position: 'absolute',
