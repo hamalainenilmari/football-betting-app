@@ -1,8 +1,17 @@
-# React + Vite
+# Football Match Prediction App – Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend for a football match prediction application built for UEFA Euro 2024. The app allows users to register, predict match outcomes, and compete with others on a scoring leaderboard based on prediction accuracy.
 
-Currently, two official plugins are available:
+The frontend is responsible for rendering the user interface, handling user interactions, and communicating with the backend API.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Overview
+* Developed with React and Vite
+* Data fetched via Axios from backend REST API
+* Deployed on Vercel
+
+## Features
+* User registration and login (via backend auth)
+* Display of upcoming and past matches
+* Prediction form for each match
+* Display of scores and live leaderboard
+* Responsive UI for mobile and desktop
